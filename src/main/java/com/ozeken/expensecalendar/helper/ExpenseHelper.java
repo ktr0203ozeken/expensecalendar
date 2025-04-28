@@ -17,6 +17,7 @@ public class ExpenseHelper {
         expense.setDate(form.getDate());
         expense.setCategory(form.getCategory());
         expense.setAmount(form.getAmount());
+        expense.setDescription(form.getDescription());
         return expense;
     }
 
@@ -29,6 +30,7 @@ public class ExpenseHelper {
         form.setDate(expense.getDate());
         form.setCategory(expense.getCategory());
         form.setAmount(expense.getAmount());
+        form.setDescription(expense.getDescription());
         return form;
     }
 }
