@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>家計簿一覧</title>
+</head>
+<body>
+    <h1>家計簿一覧</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>日付</th>
+                <th>カテゴリ</th>
+                <th>金額</th>
+                <th>説明</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- データがある場合 -->
+            <tr th:each="expense : ${expenses}">
+                <td th:text="${expense.date}"></td>
+                <td th:text="${expense.category}"></td>
+                <td th:text="${expense.amount}"></td>
+                <td th:text="${expense.description}"></td>
+                <td>
+                    <!-- 詳細リンク -->
+                    <a th:href="@{/expenses/{id}(id=${expense.id})}">詳細</a> |
+                    <!-- 編集リンク -->
+                    <a th:href="@{/expenses/edit/{id}(id=${expense.id})}">編集</a> |
+                    <!-- 削除リンク -->
+                    <a th:href="@{/expenses/delete/{id}(id=${expense.id})}" onclick="return confirm('本当に削除しますか？');">削除</a>
+                </td>
+            </tr>
+
+            <!-- データがない場合 -->
+            <tr th:if="${#lists.isEmpty(expenses)}">
+                <td colspan="5">データはありません</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <a th:href="@{/expenses/new}">新しい支出を登録する</a> |
+    <a th:href="@{/expenses/calendar}">カレンダーで見る</a>
+
+</body>
+</html>

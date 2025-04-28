@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>支出詳細</title>
+</head>
+<body>
+    <h1>支出詳細</h1>
+
+    <table border="1">
+        <tr>
+            <th>日付</th>
+            <td th:text="${expense.date}"></td>
+        </tr>
+        <tr>
+            <th>カテゴリ</th>
+            <td th:text="${expense.category}"></td>
+        </tr>
+        <tr>
+            <th>金額</th>
+            <td th:text="${expense.amount}"></td>
+        </tr>
+        <tr>
+            <th>説明</th>
+            <td th:text="${expense.description}"></td>
+        </tr>
+    </table>
+
+    <br>
+
+    <a th:href="@{/expenses}">一覧に戻る</a>
+</body>
+</html>
