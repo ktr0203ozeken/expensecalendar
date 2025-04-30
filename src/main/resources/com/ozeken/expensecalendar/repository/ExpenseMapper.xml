@@ -8,6 +8,16 @@
     FROM expenses
     ORDER BY date DESC
   </select>
+  
+  <!-- 年月で絞り込む -->
+  <select id="selectByMonth" resultType="com.ozeken.expensecalendar.entity.Expense">
+    SELECT id, date, category, amount, description
+    FROM expenses
+    WHERE EXTRACT(YEAR FROM date) = #{year}
+      AND EXTRACT(MONTH FROM date) = #{month}
+    ORDER BY date
+  </select>
+  
 
   <!-- IDで一件取得 -->
   <select id="selectById" resultType="com.ozeken.expensecalendar.entity.Expense">
