@@ -11,6 +11,9 @@ public interface ExpenseMapper {
 
 	// 全件取得
 	List<Expense> selectAll();
+	
+	// 月別取得
+	List<Expense> selectByMonth(int year, int month);
 
 	// IDで一件取得
 	Expense selectById(Long id);

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>カレンダー型家計簿</title>
+    <link rel="stylesheet" th:href="@{/css/ress.min.css}">
+    <link rel="stylesheet" th:href="@{/css/calendar.css}">
+</head>
+<body>
+    <h1 th:text="${year} + '年' + ${month} + '月の家計簿'"></h1>
+    <div>
+        <a th:href="@{/expenses/calendar(year=${prevYear}, month=${prevMonth})}">← 前の月</a>
+        |
+        <a th:href="@{/expenses/calendar(year=${nextYear}, month=${nextMonth})}">次の月 →</a>
+    </div>
+
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th style="color: red;">日</th>
+                <th>月</th>
+                <th>火</th>
+                <th>水</th>
+                <th>木</th>
+                <th>金</th>
+                <th style="color: blue;">土</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <!-- カレンダー -->
+            <!-- 42個のセルを作成-->
+            <!-- cellIndex=0から41までの42個のセル-->
+            <!-- dateNum=1から31までの日にち-->
+            <tr th:each="week : ${#numbers.sequence(1, 6)}">
+                <td th:each="dayOfWeek : ${#numbers.sequence(0, 6)}"
+                    th:with="cellIndex=${(week - 1) * 7 + dayOfWeek},
+                             dateNum=${cellIndex - firstDayOfWeek + 1}">
+
+                    <!-- 空白セル -->
+                    <div th:if="${cellIndex < firstDayOfWeek or dateNum > daysInMonth}">
+                        <!-- 何も表示しない -->
+                    </div>
+
+                    <!-- 日付と支出 -->
+                    <div th:if="${cellIndex >= firstDayOfWeek and dateNum <= daysInMonth}">
+                        <span th:text="${dateNum}"></span><br>
+
+                        <!-- 金額表示 -->
+                        <span th:each="expense : ${expenses}"
+                              th:if="${expense.date.dayOfMonth == ((week - 1) * 7 + dayOfWeek - firstDayOfWeek + 1)}"
+                              th:text="${expense.category} + '￥' + ${expense.amount}"
+                              class="amount">
+                        </span>
+                        
+                    </div>
+                    
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <br>
+    <a th:href="@{/expenses}">一覧に戻る</a>
+</body>
+</html>
