@@ -31,16 +31,16 @@
 
             <!-- カレンダー -->
             <!-- 42個のセルを作成-->
-            <!-- cellIndex=0から41までの42個のセル-->
-            <!-- dateNum=1から31までの日にち-->
+            <!-- cellIndex=0から41までの42個のセル--><!-- week-1はインデックス0から始まるため -->
+            <!-- dateNum=1から31までの日にち--><!-- +1をするのは日にちは1から始まるため -->
             <tr th:each="week : ${#numbers.sequence(1, 6)}">
                 <td th:each="dayOfWeek : ${#numbers.sequence(0, 6)}"
                     th:with="cellIndex=${(week - 1) * 7 + dayOfWeek},
                              dateNum=${cellIndex - firstDayOfWeek + 1}">
 
-                    <!-- 空白セル -->
+                    <!-- 空白セル --><!-- 月始めより前と、月終わりより後に表示しないようにする処理-->
                     <div th:if="${cellIndex < firstDayOfWeek or dateNum > daysInMonth}">
-                        <!-- 何も表示しない -->
+                        &nbsp;
                     </div>
 
                     <!-- 日付と支出 -->
@@ -49,7 +49,7 @@
 
                         <!-- 金額表示 -->
                         <span th:each="expense : ${expenses}"
-                              th:if="${expense.date.dayOfMonth == ((week - 1) * 7 + dayOfWeek - firstDayOfWeek + 1)}"
+                              th:if="${expense.date.dayOfMonth == (dateNum)}"
                               th:text="${expense.category} + '￥' + ${expense.amount}"
                               class="amount">
                         </span>
