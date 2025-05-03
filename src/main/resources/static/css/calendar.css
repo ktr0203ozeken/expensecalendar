@@ -24,7 +24,7 @@ td span {
 }
 
 td .amount {
-    color: green;
+    color: red;
     font-weight: bold;
     margin-top: 5px;
 }
