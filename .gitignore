@@ -44,9 +44,13 @@ Thumbs.db
 *.log
 
 # Spring Boot personal config
+# 本番以外の application-*.properties を無視
 src/main/resources/application-*.properties
-!src/main/resources/application-dev.properties
-!src/main/resources/application-test.properties
+!src/main/resources/application-prod.properties
+
+# test用の設定ファイルも無視
+src/test/resources/application-*.properties
+
 
 # Docker files (optional)
 *.env
