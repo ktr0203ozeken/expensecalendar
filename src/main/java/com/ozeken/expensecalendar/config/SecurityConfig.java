@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
@@ -15,9 +14,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	
-	//必要ならばDIして使用する
+	// DI対象が存在すれば、DIして保存する
 	private final UserDetailsService userDetailsService;
-	private final PasswordEncoder passwordEncoder;
 		
 
     @Bean
@@ -26,9 +24,13 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
             		// "/"、"/login"、"/register"、"/css/**"は認証なしでアクセス可能
                 .requestMatchers("/", "/login", "/register", "/css/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 //その他のリクエストは認証が必要
                 .anyRequest().authenticated()
             )
+            
+            .userDetailsService(userDetailsService)
+            
             .formLogin(form -> form
                 .loginPage("/login")
                 //すべてのユーザーに"/expenses"にリダイレクト
