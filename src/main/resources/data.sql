@@ -11,3 +11,9 @@ VALUES
 ('2025-06-08', '娯楽', 1000, 'ランチ代'),
 ('2025-06-13', '交通費', 500, 'バス代'),
 ('2025-06-25', '食費', 2000, '映画チケット');
+
+-- ユーザーデータの挿入
+INSERT INTO users (username, password, role)
+VALUES 
+('admin', '$2a$10$H/H.MtfUyYHfC3/LADAUTex79lpcff4qtlFO.SuXxlOQDOZNnXlbu', 'ADMIN')  -- パスワードは 'adminpassword' のハッシュ
+ON CONFLICT (username) DO NOTHING;
