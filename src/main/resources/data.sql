@@ -15,5 +15,7 @@ VALUES
 -- ユーザーデータの挿入
 INSERT INTO users (username, password, role)
 VALUES 
-('admin', '$2a$10$H/H.MtfUyYHfC3/LADAUTex79lpcff4qtlFO.SuXxlOQDOZNnXlbu', 'ADMIN')  -- パスワードは 'adminpassword' のハッシュ
+('user1','$2a$10$er93XnfZ3P62/.KRbXLrf.9wdZaIO35n6sQHHdB6jhrGCqqX0sb0u', 'USER'),
+('user2','$2a$10$OtijxZbUIfomg8p3w0gDyey50F6I41elanLP.tiC.vqp2l2BQa6TW', 'USER'),
+('user3',' $2a$10$aCOrvlmjb9R7u6hjAbw8O.ht3mRLBVcjJfPdGjLlA2duKdrANMMBG', 'USER')
 ON CONFLICT (username) DO NOTHING;

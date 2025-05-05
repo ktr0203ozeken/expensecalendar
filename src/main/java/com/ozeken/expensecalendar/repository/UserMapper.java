@@ -11,7 +11,7 @@ public interface UserMapper {
 	/**ユーザー名からユーザーを取得*/
 	AppUser selectByUsername(@Param("username") String username);
 	
-	/**ユーザーを登録*/
+	/**ユーザー名からユーザーを取得*/
 	void insertUser(AppUser user);
 
 }
