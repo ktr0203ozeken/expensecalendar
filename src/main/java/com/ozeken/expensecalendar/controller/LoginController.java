@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/login")
 public class LoginController {
 
+	/** ログイン画面の表示 */
 	@GetMapping
 	public String showLogin() {
 		return "login";
