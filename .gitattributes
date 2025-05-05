@@ -1,3 +1,7 @@
 /gradlew text eol=lf
 *.bat text eol=crlf
 *.jar binary
+
+# すべてのテキストファイルをLFに統一
+* text=auto eol=lf
+
