@@ -14,6 +14,7 @@ public class ExpenseHelper {
     public static Expense convertExpense(ExpenseForm form) {
         Expense expense = new Expense();
         expense.setId(form.getId());
+        expense.setUserId(form.getUserId());
         expense.setDate(form.getDate());
         expense.setCategory(form.getCategory());
         expense.setAmount(form.getAmount());
@@ -27,6 +28,7 @@ public class ExpenseHelper {
     public static ExpenseForm convertExpenseForm(Expense expense) {
         ExpenseForm form = new ExpenseForm();
         form.setId(expense.getId());
+        form.setUserId(expense.getUserId());
         form.setDate(expense.getDate());
         form.setCategory(expense.getCategory());
         form.setAmount(expense.getAmount());
