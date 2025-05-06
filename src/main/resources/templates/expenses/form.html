@@ -9,7 +9,12 @@
 
     <!-- フォーム開始 -->
     <form th:action="@{/expenses}" th:object="${expenseForm}" method="post">
+        
 
+         <!-- hiddenのid（編集時用） -->
+        <input type="hidden" th:field="*{id}" />
+
+        
         <!-- 日付入力 -->
         <div>
             <label>日付：</label>
