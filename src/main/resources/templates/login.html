@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン - 家計簿アプリ</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1>ログイン</h1>
+
+    <!-- ログインフォーム -->
+    <form th:action="@{/login}" method="post">
+        <div>
+            <label for="username">ユーザー名：</label>
+            <input type="text" id="username" name="username" required />
+        </div>
+
+        <div>
+            <label for="password">パスワード：</label>
+            <input type="password" id="password" name="password" required />
+        </div>
+        
+        <div>
+                <label>
+                    <input type="checkbox" name="remember-me" />
+                    ログイン状態を保持する
+                </label>
+         </div>
+
+        <div>
+            <button type="submit">ログイン</button>
+        </div>
+    </form>
+
+    <!-- ログインエラー時 -->
+    <div th:if="${param.error}">
+        <p style="color: red;">ユーザー名またはパスワードが間違っています。</p>
+    </div>
+
+    <!-- ログアウト後 -->
+    <div th:if="${param.logout}">
+        <p style="color: green;">ログアウトしました。</p>
+    </div>
+
+    <p>アカウントをお持ちでない方は <a th:href="@{/register}">新規登録</a> へ</p>
+</body>
+</html>

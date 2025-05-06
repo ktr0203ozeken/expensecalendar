@@ -11,3 +11,11 @@ VALUES
 ('2025-06-08', '娯楽', 1000, 'ランチ代'),
 ('2025-06-13', '交通費', 500, 'バス代'),
 ('2025-06-25', '食費', 2000, '映画チケット');
+
+-- ユーザーデータの挿入
+INSERT INTO users (username, password, role)
+VALUES 
+('user1','$2a$10$er93XnfZ3P62/.KRbXLrf.9wdZaIO35n6sQHHdB6jhrGCqqX0sb0u', 'USER'),
+('user2','$2a$10$OtijxZbUIfomg8p3w0gDyey50F6I41elanLP.tiC.vqp2l2BQa6TW', 'USER'),
+('user3',' $2a$10$aCOrvlmjb9R7u6hjAbw8O.ht3mRLBVcjJfPdGjLlA2duKdrANMMBG', 'USER')
+ON CONFLICT (username) DO NOTHING;
