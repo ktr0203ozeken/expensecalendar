@@ -1,0 +1,48 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>家計簿アプリ</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <h1>家計簿アプリを始めましょう！</h1>
+        <nav>
+            <a th:href="@{/login}">ログイン</a> |
+            <a th:href="@{/register}">新規登録</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>このアプリでできること</h2>
+            <ul>
+                <li>カレンダー形式で支出を記録・確認</li>
+                <li>月ごとの支出集計</li>
+                <li>カテゴリ別の支出管理</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>使い方の流れ</h2>
+            <ol>
+                <li>アカウント登録</li>
+                <li>ログインして支出を入力</li>
+                <li>月ごとの支出をカレンダーで確認</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>まずはログインまたは新規登録</h2>
+            <a th:href="@{/login}" class="btn">ログイン</a>
+            <a th:href="@{/register}" class="btn">新規登録</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 家計簿アプリ</p>
+    </footer>
+</body>
+</html>
