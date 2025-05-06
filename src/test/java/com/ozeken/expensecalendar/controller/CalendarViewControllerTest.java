@@ -25,7 +25,8 @@ public class CalendarViewControllerTest {
     @Test
     public void testShowCalendar() throws Exception {
         // groupByDayOfMonthの戻り値をダミーにする
-        org.mockito.Mockito.when(expenseService.groupByDayOfMonth(2025, 5))
+    	Long userId = 1L; // テスト用のユーザーID
+        org.mockito.Mockito.when(expenseService.groupByDayOfMonth(userId,2025, 5))
             .thenReturn(Collections.emptyMap());
 
         mockMvc.perform(get("/expenses/calendar")
