@@ -3,6 +3,7 @@ package com.ozeken.expensecalendar.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ozeken.expensecalendar.entity.Expense;
+import com.ozeken.expensecalendar.entity.LoginUser;
 import com.ozeken.expensecalendar.service.ExpenseService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,7 +31,8 @@ public class CalendarViewController {
     public String showCalendar(
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "month", required = false) Integer month,
-            Model model) {
+            Model model,
+            @AuthenticationPrincipal LoginUser loginUser) {
 
     	//nullの場合は,今日の年月を取得
         LocalDate today = LocalDate.now();
@@ -43,8 +46,13 @@ public class CalendarViewController {
         LocalDate prevMonth = firstDay.minusMonths(1);
         LocalDate nextMonth = firstDay.plusMonths(1);
 
+     // 指定された年月の家計簿を取得
+        if (loginUser.getAppUser() == null) {
+            return "redirect:/login";
+        }
         //指定された年月の家計簿を取得
-        List<Expense> expenses = expenseService.findByMonth(currentYear, currentMonth);
+        Long userId = loginUser.getAppUser().getId();
+        List<Expense> expenses = expenseService.findByMonth(userId,currentYear, currentMonth);
         
         //月初日を取得し,日曜始まりへと変換
         int firstDayOfWeek = firstDay.getDayOfWeek().getValue();

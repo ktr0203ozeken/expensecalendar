@@ -16,6 +16,9 @@ public class ExpenseForm {
 	// ID
 	private Long id;
 
+	// ユーザーID（外部キー）
+	private Long userId;
+
 	// 日付
 	@NotNull(message = "日付を入力して下さい")
 	private LocalDate date;

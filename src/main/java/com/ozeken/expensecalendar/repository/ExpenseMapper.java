@@ -3,28 +3,28 @@ package com.ozeken.expensecalendar.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.ozeken.expensecalendar.entity.Expense;
 
 @Mapper
 public interface ExpenseMapper {
 
-	// 全件取得
-	List<Expense> selectAll();
+	// ログインユーザーの全件取得
+	List<Expense> selectAll(@Param("userId") Long userId);
 	
 	// 月別取得
-	List<Expense> selectByMonth(int year, int month);
+	List<Expense> selectByMonth(@Param("userId") Long userId, @Param("year") int year, @Param("month") int month);
 
-	// IDで一件取得
-	Expense selectById(Long id);
+	// IDとuserIdで取得（安全な取得）
+	Expense selectByIdAndUserId(@Param("id") Long id, @Param("userId") Long userId);
 
 	// 新規登録
 	void insert(Expense expense);
 
-	// 更新
+	// 更新（userIdを含むバリデーションはサービス層で行う）
 	void update(Expense expense);
 
-	// 削除
-	void delete(Long id);
-
+	// IDとuserIdで削除（安全な削除）
+	void deleteByIdAndUserId(@Param("id") Long id, @Param("userId") Long userId);
 }

@@ -2,34 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ozeken.expensecalendar.repository.ExpenseMapper">
     
-    <!-- 全件取得 -->
+  <!-- 全件取得 -->
   <select id="selectAll" resultType="com.ozeken.expensecalendar.entity.Expense">
-    SELECT id, date, category, amount, description
+    SELECT id, user_id, date, category, amount, description
     FROM expenses
+    WHERE user_id = #{userId}
     ORDER BY date DESC
   </select>
   
   <!-- 年月で絞り込む -->
   <select id="selectByMonth" resultType="com.ozeken.expensecalendar.entity.Expense">
-    SELECT id, date, category, amount, description
+    SELECT id, user_id, date, category, amount, description
     FROM expenses
-    WHERE EXTRACT(YEAR FROM date) = #{year}
+    WHERE user_id = #{userId}
+      AND EXTRACT(YEAR FROM date) = #{year}
       AND EXTRACT(MONTH FROM date) = #{month}
     ORDER BY date
   </select>
   
-
-  <!-- IDで一件取得 -->
-  <select id="selectById" resultType="com.ozeken.expensecalendar.entity.Expense">
-    SELECT id, date, category, amount, description
+  <!-- IDで一件取得  -->
+  <select id="selectByIdAndUserId" resultType="com.ozeken.expensecalendar.entity.Expense">
+    SELECT id, user_id, date, category, amount, description
     FROM expenses
-    WHERE id = #{id}
+    WHERE id = #{id} AND user_id = #{userId}
   </select>
 
   <!-- 新規登録 -->
   <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO expenses (date, category, amount, description)
-    VALUES (#{date}, #{category}, #{amount}, #{description})
+    INSERT INTO expenses (user_id, date, category, amount, description)
+    VALUES (#{userId}, #{date}, #{category}, #{amount}, #{description})
   </insert>
 
   <!-- 更新 -->
@@ -39,12 +40,13 @@
         category = #{category},
         amount = #{amount},
         description = #{description}
-    WHERE id = #{id}
+    WHERE id = #{id} AND user_id = #{userId}
   </update>
 
   <!-- 削除 -->
-  <delete id="delete">
-    DELETE FROM expenses WHERE id = #{id}
+  <delete id="deleteByIdAndUserId">
+    DELETE FROM expenses
+    WHERE id = #{id} AND user_id = #{userId}
   </delete>
   
 </mapper>

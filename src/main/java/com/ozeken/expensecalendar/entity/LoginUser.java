@@ -21,6 +21,12 @@ public class LoginUser extends User {
         );
         this.appUser = appUser;
     }
+    
+ // ★Springの内部処理用（@AuthenticationPrincipalなどで使われる）
+    public LoginUser() {
+        super("anonymous", "", List.of());
+        this.appUser = null;
+    }
 
     public AppUser getAppUser() {
         return appUser;
