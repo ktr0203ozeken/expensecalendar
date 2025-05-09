@@ -1,4 +1,4 @@
-package com.ozeken.expensecalendar.service;
+package com.ozeken.expensecalendar.service.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ozeken.expensecalendar.entity.Expense;
 import com.ozeken.expensecalendar.repository.ExpenseMapper;
+import com.ozeken.expensecalendar.service.ExpenseService;
 
 import lombok.RequiredArgsConstructor;
 
