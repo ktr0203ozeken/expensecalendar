@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>家計簿一覧</title>
+    <link rel="stylesheet" th:href="@{/css/ress.min.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/list.css}">
+        
 </head>
 <body>
     <h1>家計簿一覧</h1>
@@ -26,11 +30,12 @@
                 <td th:text="${expense.description}"></td>
                 <td>
                     <!-- 詳細リンク -->
-                    <a th:href="@{/expenses/{id}(id=${expense.id})}">詳細</a> |
+                    <a th:href="@{/expenses/{id}(id=${expense.id})}" class="button">詳細</a> |
                     <!-- 編集リンク -->
-                    <a th:href="@{/expenses/edit/{id}(id=${expense.id})}">編集</a> |
+                    <a th:href="@{/expenses/edit/{id}(id=${expense.id})}" class="button">編集</a> |
                     <!-- 削除リンク -->
-                    <a th:href="@{/expenses/delete/{id}(id=${expense.id})}" onclick="return confirm('本当に削除しますか？');">削除</a>
+                    <a th:href="@{/expenses/delete/{id}(id=${expense.id})}" 
+                    onclick="return confirm('本当に削除しますか？');" class="button">削除</a>
                 </td>
             </tr>
 
@@ -43,8 +48,8 @@
 
     <br>
 
-    <a th:href="@{/expenses/new}">新しい支出を登録する</a> |
-    <a th:href="@{/expenses/calendar}">カレンダーで見る</a>
+    <a th:href="@{/expenses/new}"  class="button">新しい支出を登録する</a> |
+    <a th:href="@{/expenses/calendar}" class="button">カレンダーで見る</a>
 
 </body>
 </html>
