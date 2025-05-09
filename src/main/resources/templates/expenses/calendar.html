@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <title>カレンダー型家計簿</title>
     <link rel="stylesheet" th:href="@{/css/ress.min.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/calendar.css}">
 </head>
+
 <body>
     <h1 th:text="${year} + '年' + ${month} + '月の家計簿'"></h1>
+    <br>
     <div>
-        <a th:href="@{/expenses/calendar(year=${prevYear}, month=${prevMonth})}">← 前の月</a>
+        <a th:href="@{/expenses/calendar(year=${prevYear}, month=${prevMonth})}" class="button">← 前の月</a>
         |
-        <a th:href="@{/expenses/calendar(year=${nextYear}, month=${nextMonth})}">次の月 →</a>
+        <a th:href="@{/expenses/calendar(year=${nextYear}, month=${nextMonth})}" class="button">次の月 →</a>
     </div>
 
 
@@ -63,6 +66,6 @@
     </table>
 
     <br>
-    <a th:href="@{/expenses}">一覧に戻る</a>
+    <a th:href="@{/expenses}" class="button">一覧に戻る</a>
 </body>
 </html>
