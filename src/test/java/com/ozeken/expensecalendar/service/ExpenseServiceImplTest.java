@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.ozeken.expensecalendar.entity.Expense;
+import com.ozeken.expensecalendar.service.impl.ExpenseServiceImpl;
 
 @SpringBootTest
 @ActiveProfiles("test")
