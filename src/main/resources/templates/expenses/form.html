@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>支出の登録</title>
+    <link rel="stylesheet" th:href="@{/css/ress.min.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
 </head>
 <body>
-    <h1>支出の登録</h1>
+    <h1 th:text="${expenseForm.id} != null ? '支出の編集' : '支出の登録'"></h1>
 
     <!-- フォーム開始 -->
     <form th:action="@{/expenses}" th:object="${expenseForm}" method="post">
@@ -13,39 +16,38 @@
 
          <!-- hiddenのid（編集時用） -->
         <input type="hidden" th:field="*{id}" />
-
         
         <!-- 日付入力 -->
-        <div>
+        <div class="form-group">
             <label>日付：</label>
             <input type="date" th:field="*{date}" />
-            <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}" style="color: red;"></div>
+            <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="error-message"></div>
         </div>
 
         <!-- カテゴリ入力 -->
-        <div>
+        <div class="form-group">
             <label>カテゴリ：</label>
             <input type="text" th:field="*{category}" />
-            <div th:if="${#fields.hasErrors('category')}" th:errors="*{category}" style="color: red;"></div>
+            <div th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="error-message"></div>
         </div>
 
         <!-- 金額入力 -->
-        <div>
+        <div class="form-group">
             <label>金額：</label>
-            <input type="number" th:field="*{amount}"max="2147483647" />
-            <div th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" style="color: red;"></div>
+            <input type="number" th:field="*{amount}" max="2147483647" />
+            <div th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="error-message"></div>
         </div>
 
         <!-- 説明入力 -->
-        <div>
+        <div class="form-group">
             <label>説明：</label>
             <textarea th:field="*{description}" rows="3" cols="30"></textarea>
-            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red;"></div>
+            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-message"></div>
         </div>
 
         <!-- 送信ボタン -->
-        <div>
-            <button type="submit">登録</button>
+        <div class="form-group">
+            <button type="submit" th:text="${expenseForm.id} != null ? '更新' : '登録'"></button>
         </div>
 
     </form>
@@ -53,7 +55,7 @@
     <br>
 
     <!-- 一覧に戻るリンク -->
-    <a th:href="@{/expenses}">一覧に戻る</a>
+    <a th:href="@{/expenses}" class="button">一覧に戻る</a>
 
 </body>
 </html>
