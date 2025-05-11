@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.Expense;
 import com.ozeken.expensecalendar.entity.LoginUser;
 import com.ozeken.expensecalendar.form.ExpenseForm;
@@ -35,7 +36,7 @@ public class ExpenseController {
 	public String listExpenses(Model model, @AuthenticationPrincipal LoginUser loginUser) { 
 		
 		Long userId = loginUser.getAppUser().getId();
-		List<Expense> expenses = expenseService.findAll(userId);
+		List<ExpenseWithGenre> expenses = expenseService.findAllWithGenre(userId);
 		model.addAttribute("expenses", expenses);
 		return "expenses/list";
 	}
@@ -53,21 +54,25 @@ public class ExpenseController {
 			                                          @AuthenticationPrincipal LoginUser loginUser) {
 		Long userId = loginUser.getAppUser().getId();
 		Expense expense = expenseService.findById(id, userId);
-		ExpenseForm expenseForm = ExpenseHelper.convertExpenseForm(expense);
+		if (expense == null) {
+			return "redirect:/expenses";
+		}
+		ExpenseForm expenseForm = ExpenseHelper.convertToExpenseForm(expense);
 		model.addAttribute("expenseForm", expenseForm);
 		return "expenses/form";
 	}
+		
 	/** 詳細表示 */
 	@GetMapping("/{id}")
 	public String showExpenseDetail(@PathVariable("id") Long id, Model model,
-			                                             @AuthenticationPrincipal LoginUser loginUser) {
-		Long userId = loginUser.getAppUser().getId();
-	    Expense expense = expenseService.findById(id, userId);
+	                                @AuthenticationPrincipal LoginUser loginUser) {
+	    Long userId = loginUser.getAppUser().getId();
+	    ExpenseWithGenre expense = expenseService.findByIdWithGenre(id, userId);
 	    model.addAttribute("expense", expense);
 	    return "expenses/detail";
 	}
 
-	/** 登録または更新 */
+	/** 登録または編集処理 */
 	@PostMapping
 	public String saveOrUpdateExpense(
 			@Valid @ModelAttribute ExpenseForm expenseForm, 
@@ -82,7 +87,7 @@ public class ExpenseController {
 
 		Long userId = loginUser.getAppUser().getId();
 		expenseForm.setUserId(userId);
-		Expense expense = ExpenseHelper.convertExpense(expenseForm);
+		Expense expense = ExpenseHelper.convertToExpense(expenseForm);
 
 		if (expense.getId() == null) {
 			expenseService.insert(expense);
