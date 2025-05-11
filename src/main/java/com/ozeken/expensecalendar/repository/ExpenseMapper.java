@@ -5,20 +5,24 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.Expense;
 
 @Mapper
 public interface ExpenseMapper {
-
-	// ログインユーザーの全件取得
-	List<Expense> selectAll(@Param("userId") Long userId);
+	
+	// ジャンル名付きの支出一覧を取得（JOIN）
+	List<ExpenseWithGenre> selectWithGenreByUserId(@Param("userId") Long userId);
+	
+	// ジャンル名付きの支出を取得（JOIN）
+	ExpenseWithGenre selectWithGenreByIdAndUserId(@Param("id") Long id, @Param("userId") Long userId);
+	
+	// ID で取得（ユーザー指定）
+	Expense selectByIdAndUserId(@Param("id") Long id, @Param("userId") Long userId);
 	
 	// 月別取得
-	List<Expense> selectByMonth(@Param("userId") Long userId, @Param("year") int year, @Param("month") int month);
-
-	// IDとuserIdで取得（安全な取得）
-	Expense selectByIdAndUserId(@Param("id") Long id, @Param("userId") Long userId);
-
+	List<ExpenseWithGenre> selectByMonth(@Param("userId") Long userId, @Param("year") int year, @Param("month") int month);
+	
 	// 新規登録
 	void insert(Expense expense);
 
@@ -27,4 +31,5 @@ public interface ExpenseMapper {
 
 	// IDとuserIdで削除（安全な削除）
 	void deleteByIdAndUserId(@Param("id") Long id, @Param("userId") Long userId);
+
 }
