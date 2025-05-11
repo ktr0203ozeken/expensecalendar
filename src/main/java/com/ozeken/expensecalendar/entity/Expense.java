@@ -16,8 +16,8 @@ public class Expense {
 	// 日付
 	private LocalDate date;
 
-	// カテゴリ
-	private String category;
+	// カテゴリ (外部キー)
+	private Integer genreId;
 
 	// 金額
 	private Integer amount;

@@ -28,7 +28,7 @@
             <!-- データがある場合 -->
             <tr th:each="expense : ${expenses}">
                 <td th:text="${expense.date}"></td>
-                <td th:text="${expense.category}"></td>
+                <td th:text="${expense.genreName}"></td>
                 <td th:text="${expense.amount}"></td>
                 <td th:text="${expense.description}"></td>
                 <td>
