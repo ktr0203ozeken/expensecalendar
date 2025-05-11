@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -26,10 +25,8 @@ public class ExpenseForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
 
-	// カテゴリ
-	@NotBlank(message = "カテゴリを入力してください")
-	@Size(max = 50, message = "カテゴリは50文字以内で入力してください")
-	private String category;
+	// ジャンルID（外部キー）
+	private Integer genreId;
 
 	// 金額
 	@NotNull(message = "金額を入力してください")
