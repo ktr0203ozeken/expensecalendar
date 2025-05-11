@@ -1,38 +1,44 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>ログイン - 家計簿アプリ</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/ress.min.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
 </head>
 <body>
+    
+    <div class="container">
+    
     <h1>ログイン</h1>
 
     <!-- ログインフォーム -->
     <form th:action="@{/login}" method="post">
-        <div>
+        <div class="form-group">
             <label for="username">ユーザー名：</label>
             <input type="text" id="username" name="username" required />
         </div>
 
-        <div>
+        <div class="form-group">
             <label for="password">パスワード：</label>
             <input type="password" id="password" name="password" required />
         </div>
         
-        <div>
+        <div class="form-group">
                 <label>
                     <input type="checkbox" name="remember-me" />
                     ログイン状態を保持する
                 </label>
          </div>
 
-        <div>
-            <button type="submit">ログイン</button>
+        <div class="form-group">
+            <button type="submit" class="login">ログイン</button>
         </div>
     </form>
 
     <!-- ログインエラー時 -->
-    <div th:if="${param.error}">
+    <div th:if="${param.error}" class="error-message">
         <p style="color: red;">ユーザー名またはパスワードが間違っています。</p>
     </div>
 
@@ -41,6 +47,13 @@
         <p style="color: green;">ログアウトしました。</p>
     </div>
 
-    <p>アカウントをお持ちでない方は <a th:href="@{/register}">新規登録</a> へ</p>
+    <div class="return-wrapper">
+        <p>アカウントをお持ちでない方は<a th:href="@{/register}" class="button">ユーザー登録</a>へ</p>
+        <br>
+        <a th:href="@{/}" class="return-button">トップに戻る</a>
+    </div>
+    
+    </div>
+    
 </body>
 </html>

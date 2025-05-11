@@ -1,17 +1,22 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>家計簿アプリ</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/ress.min.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 <body>
+    
+    <div class="container">
+        
     <header>
         <h1>家計簿アプリを始めましょう！</h1>
+        <br>
         <nav>
-            <a th:href="@{/login}">ログイン</a> |
-            <a th:href="@{/register}">新規登録</a>
+            <a th:href="@{/register}" class="button">新規登録</a> |
+            <a th:href="@{/login}" class="login">ログイン</a>
         </nav>
     </header>
 
@@ -35,14 +40,16 @@
         </section>
 
         <section>
-            <h2>まずはログインまたは新規登録</h2>
-            <a th:href="@{/login}" class="btn">ログイン</a>
-            <a th:href="@{/register}" class="btn">新規登録</a>
+            <h2>まずは新規登録</h2>
+            <a th:href="@{/register}" class="button">新規登録</a>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 家計簿アプリ</p>
+        <p>&copy; 2025 Ozeken. All rights reserved.</p>
     </footer>
+    
+    </div>
+    
 </body>
 </html>
