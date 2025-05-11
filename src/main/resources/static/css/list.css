@@ -38,3 +38,29 @@ td[colspan="5"] {
     padding: 20px;
     color: #777;
 }
+
+.delete {
+    background-color: #f08080 !important;
+}
+
+.delete:hover {
+    background-color: #e06666 !important;
+}
+
+@media (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    a.bottom-link {
+        display: block;
+        margin-bottom: 10px;
+    }
+}
