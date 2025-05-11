@@ -12,10 +12,13 @@
     <h1 th:text="${year} + '年' + ${month} + '月の家計簿'"></h1>
     <br>
     <div>
+    <a th:href="@{/expenses}" class="button">一覧に戻る</a>
+    <div>
+    <div class="calendar-controls">
         <a th:href="@{/expenses/calendar(year=${prevYear}, month=${prevMonth})}" class="button">← 前の月</a>
-        |
         <a th:href="@{/expenses/calendar(year=${nextYear}, month=${nextMonth})}" class="button">次の月 →</a>
     </div>
+
 
 
     <table border="1">
@@ -64,8 +67,6 @@
 
         </tbody>
     </table>
-
-    <br>
-    <a th:href="@{/expenses}" class="button">一覧に戻る</a>
+    
 </body>
 </html>
