@@ -2,42 +2,86 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ozeken.expensecalendar.repository.ExpenseMapper">
     
-  <!-- 全件取得 -->
-  <select id="selectAll" resultType="com.ozeken.expensecalendar.entity.Expense">
-    SELECT id, user_id, date, category, amount, description
-    FROM expenses
-    WHERE user_id = #{userId}
-    ORDER BY date DESC
-  </select>
-  
-  <!-- 年月で絞り込む -->
-  <select id="selectByMonth" resultType="com.ozeken.expensecalendar.entity.Expense">
-    SELECT id, user_id, date, category, amount, description
-    FROM expenses
-    WHERE user_id = #{userId}
-      AND EXTRACT(YEAR FROM date) = #{year}
-      AND EXTRACT(MONTH FROM date) = #{month}
-    ORDER BY date
-  </select>
-  
-  <!-- IDで一件取得  -->
+    <!-- ExpenseWithGenre 用のマッピング定義 -->
+<resultMap id="ExpenseWithGenreMap" type="com.ozeken.expensecalendar.dto.ExpenseWithGenre">
+  <result property="id" column="id"/>
+  <result property="userId" column="user_id"/>
+  <result property="date" column="date"/>
+  <result property="genreId" column="genre_id"/>
+  <result property="genreName" column="genre_name"/>
+  <result property="amount" column="amount"/>
+  <result property="description" column="description"/>
+</resultMap>
+
+  <!-- ジャンル名付きで支出一覧を取得 -->
+<select id="selectWithGenreByUserId" resultMap="ExpenseWithGenreMap">
+  SELECT
+    e.id,
+    e.user_id,
+    e.date,
+    e.genre_id,
+    g.name AS genre_name,
+    e.amount,
+    e.description
+  FROM expenses e
+  JOIN genres g ON e.genre_id = g.id
+  WHERE e.user_id = #{userId}
+  ORDER BY e.date DESC
+</select>
+
+<!-- IDで一件取得  -->
   <select id="selectByIdAndUserId" resultType="com.ozeken.expensecalendar.entity.Expense">
-    SELECT id, user_id, date, category, amount, description
+    SELECT id, user_id, date, genre_id, amount, description
     FROM expenses
     WHERE id = #{id} AND user_id = #{userId}
   </select>
+  
+  <!-- ジャンル名付きで支出を取得 -->
+   <select id="selectWithGenreByIdAndUserId" resultMap="ExpenseWithGenreMap">
+        SELECT
+            e.id,
+            e.user_id,
+            e.date,
+            e.genre_id,
+            g.name AS genre_name,
+            e.amount,
+            e.description
+        FROM expenses e
+        JOIN genres g ON e.genre_id = g.id
+        WHERE e.id = #{id} AND e.user_id = #{userId}
+        ORDER BY e.date DESC
+       </select>
+       
+  <!-- 年月で絞り込む -->
+  <select id="selectByMonth" resultMap="ExpenseWithGenreMap">
+  SELECT
+    e.id,
+    e.user_id,
+    e.date,
+    e.genre_id,
+    g.name AS genre_name,
+    e.amount,
+    e.description
+  FROM expenses e
+  LEFT JOIN genres g ON e.genre_id = g.id
+  WHERE e.user_id = #{userId}
+    AND EXTRACT(YEAR FROM e.date) = #{year}
+    AND EXTRACT(MONTH FROM e.date) = #{month}
+  ORDER BY e.date
+</select>
 
+  
   <!-- 新規登録 -->
   <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO expenses (user_id, date, category, amount, description)
-    VALUES (#{userId}, #{date}, #{category}, #{amount}, #{description})
+    INSERT INTO expenses (user_id, date, genre_id, amount, description)
+    VALUES (#{userId}, #{date}, #{genreId}, #{amount}, #{description})
   </insert>
 
   <!-- 更新 -->
   <update id="update">
     UPDATE expenses
     SET date = #{date},
-        category = #{category},
+        genre_id = #{genreId},
         amount = #{amount},
         description = #{description}
     WHERE id = #{id} AND user_id = #{userId}

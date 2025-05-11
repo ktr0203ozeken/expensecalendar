@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ozeken.expensecalendar.entity.Expense;
+import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.LoginUser;
 import com.ozeken.expensecalendar.service.ExpenseService;
 
@@ -52,7 +52,9 @@ public class CalendarViewController {
         }
         //指定された年月の家計簿を取得
         Long userId = loginUser.getAppUser().getId();
-        List<Expense> expenses = expenseService.findByMonth(userId,currentYear, currentMonth);
+        List<ExpenseWithGenre> expenses = expenseService.findByMonth(userId,currentYear, currentMonth);
+        
+        System.out.println(expenses);
         
         //月初日を取得し,日曜始まりへと変換
         int firstDayOfWeek = firstDay.getDayOfWeek().getValue();

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.Expense;
 import com.ozeken.expensecalendar.repository.ExpenseMapper;
 import com.ozeken.expensecalendar.service.ExpenseService;
@@ -20,33 +21,37 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	/**DI*/
 	private final ExpenseMapper expenseMapper;
-
-	// ログインユーザーの全件取得
+	
+	
 	@Override
-	public List<Expense> findAll(Long userId) {
-		return expenseMapper.selectAll(userId);
+	public List<ExpenseWithGenre> findAllWithGenre(Long userId) {
+	    return expenseMapper.selectWithGenreByUserId(userId);
 	}
-
+	
+	@Override
+	public ExpenseWithGenre findByIdWithGenre(Long id, Long userId) {
+		return expenseMapper.selectWithGenreByIdAndUserId(id, userId);
+	}
+	
+	@Override
+	public Expense findById(Long id, Long userId) {
+		return expenseMapper.selectByIdAndUserId(id, userId);
+	}
+	
 	// 月別取得 （ユーザー指定）
 	@Override
-	public List<Expense> findByMonth(Long userId, int year, int month) {
+	public List<ExpenseWithGenre> findByMonth(Long userId, int year, int month) {
 		return expenseMapper.selectByMonth(userId, year, month);
 	}
 
 	@Override
     // カレンダー表示用：日別に支出をまとめる
-    public Map<Integer, List<Expense>> groupByDayOfMonth(Long userId, int year, int month) {
-        List<Expense> expenses = findByMonth(userId, year, month);
+    public Map<Integer, List<ExpenseWithGenre>> groupByDayOfMonth(Long userId, int year, int month) {
+        List<ExpenseWithGenre> expenses = findByMonth(userId, year, month);
         //streamでデータを流し込み、getDateで年月日を取得、
         //getDayOfMonthで日にちのみ(1~31の整数)を取得、Collectors.groupingByでグループ化(mapの形式に変換)
         return expenses.stream().collect(Collectors.groupingBy(exp -> exp.getDate().getDayOfMonth()));
     }
-
-	// IDとuserIdで一件取得（他人のデータ保護）
-	@Override
-	public Expense findById(Long id, Long userId) {
-		return expenseMapper.selectByIdAndUserId(id, userId);
-	}
 
 	@Override
 	public void insert(Expense expense) {
@@ -63,4 +68,5 @@ public class ExpenseServiceImpl implements ExpenseService {
 	public void delete(Long id, Long userId) {
 		expenseMapper.deleteByIdAndUserId(id, userId);
 	}
+
 }

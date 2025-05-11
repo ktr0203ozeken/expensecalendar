@@ -27,8 +27,13 @@
         <!-- カテゴリ入力 -->
         <div class="form-group">
             <label>カテゴリ：</label>
-            <input type="text" th:field="*{category}" />
-            <div th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="error-message"></div>
+        <select th:field="*{genreId}">
+            <option value="1">食費</option>
+            <option value="2">交通費</option>
+            <option value="3">日用品</option>
+            <option value="4">娯楽</option>
+            <option value="5">その他</option>
+        </select>
         </div>
 
         <!-- 金額入力 -->
@@ -41,7 +46,7 @@
         <!-- 説明入力 -->
         <div class="form-group">
             <label>説明：</label>
-            <textarea th:field="*{description}" rows="3" cols="30"></textarea>
+            <textarea th:field="*{description}" rows="3" cols="30" placeholder="メモ（空欄でもOK）"></textarea>
             <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-message"></div>
         </div>
 
