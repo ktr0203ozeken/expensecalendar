@@ -9,6 +9,9 @@
         
 </head>
 <body>
+    
+    <div class="container">
+    
     <h1>家計簿一覧</h1>
 
     <table border="1">
@@ -35,7 +38,7 @@
                     <a th:href="@{/expenses/edit/{id}(id=${expense.id})}" class="button">編集</a> |
                     <!-- 削除リンク -->
                     <a th:href="@{/expenses/delete/{id}(id=${expense.id})}" 
-                    onclick="return confirm('本当に削除しますか？');" class="button">削除</a>
+                    onclick="return confirm('本当に削除しますか？');" class="button delete">削除</a>
                 </td>
             </tr>
 
@@ -50,6 +53,8 @@
 
     <a th:href="@{/expenses/new}"  class="button">新しい支出を登録する</a> |
     <a th:href="@{/expenses/calendar}" class="button">カレンダーで見る</a>
-
+    
+    </div>
+    
 </body>
 </html>
