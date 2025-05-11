@@ -56,7 +56,7 @@
                         <!-- 金額表示 -->
                         <span th:each="expense : ${expenses}"
                               th:if="${expense.date.dayOfMonth == (dateNum)}"
-                              th:text="${expense.category} + '￥' + ${expense.amount}"
+                              th:text="${expense.genreName} + '￥' + ${expense.amount}"
                               class="amount">
                         </span>
                         
