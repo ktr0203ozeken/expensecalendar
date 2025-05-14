@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ozeken.expensecalendar.dto.DailyTotal;
 import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.Expense;
 import com.ozeken.expensecalendar.repository.ExpenseMapper;
@@ -22,7 +23,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	/**DI*/
 	private final ExpenseMapper expenseMapper;
 	
-	
+	// ------- 取得 --------
 	@Override
 	public List<ExpenseWithGenre> findAllWithGenre(Long userId) {
 	    return expenseMapper.selectWithGenreByUserId(userId);
@@ -38,10 +39,16 @@ public class ExpenseServiceImpl implements ExpenseService {
 		return expenseMapper.selectByIdAndUserId(id, userId);
 	}
 	
-	// 月別取得 （ユーザー指定）
+	// 月別取得
 	@Override
 	public List<ExpenseWithGenre> findByMonth(Long userId, int year, int month) {
 		return expenseMapper.selectByMonth(userId, year, month);
+	}
+	
+	// 日付合計取得
+	@Override
+	public List<DailyTotal> findDailyTotalByMonth(Long userId, int year, int month) {
+		return expenseMapper.selectDailyTotalByMonth(userId, year, month);
 	}
 
 	@Override
@@ -52,7 +59,9 @@ public class ExpenseServiceImpl implements ExpenseService {
         //getDayOfMonthで日にちのみ(1~31の整数)を取得、Collectors.groupingByでグループ化(mapの形式に変換)
         return expenses.stream().collect(Collectors.groupingBy(exp -> exp.getDate().getDayOfMonth()));
     }
-
+	
+	
+	// ------- 登録・更新・削除 --------
 	@Override
 	public void insert(Expense expense) {
 		expenseMapper.insert(expense);
@@ -63,7 +72,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 		expenseMapper.update(expense);
 	}
 
-	// IDとuserIdで削除（他人のデータ削除を防止）
 	@Override
 	public void delete(Long id, Long userId) {
 		expenseMapper.deleteByIdAndUserId(id, userId);

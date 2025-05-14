@@ -3,6 +3,7 @@ package com.ozeken.expensecalendar.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ozeken.expensecalendar.dto.DailyTotal;
 import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.Expense;
 
@@ -19,6 +20,9 @@ public interface ExpenseService {
 	
 	// 月別取得（ユーザー指定）
 	List<ExpenseWithGenre> findByMonth(Long userId, int year, int month);
+	
+	// 日付合計取得（ユーザー指定）
+	List<DailyTotal> findDailyTotalByMonth(Long userId, int year, int month);
 	
 	// 年月で取得し、日にちでグループ化（ユーザー指定）
 	Map<Integer, List<ExpenseWithGenre>> groupByDayOfMonth(Long userId, int currentYear, int currentMonth);
