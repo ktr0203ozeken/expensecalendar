@@ -13,6 +13,11 @@
   <result property="description" column="description"/>
 </resultMap>
 
+<resultMap id="DailyTotalMap" type="com.ozeken.expensecalendar.dto.DailyTotal">
+    <result property="day" column="day"/>
+    <result property="total" column="total"/>
+</resultMap>
+
   <!-- ジャンル名付きで支出一覧を取得 -->
 <select id="selectWithGenreByUserId" resultMap="ExpenseWithGenreMap">
   SELECT
@@ -50,10 +55,13 @@
         JOIN genres g ON e.genre_id = g.id
         WHERE e.id = #{id} AND e.user_id = #{userId}
         ORDER BY e.date DESC
-       </select>
+    </select>
        
-  <!-- 年月で絞り込む -->
-  <select id="selectByMonth" resultMap="ExpenseWithGenreMap">
+<!-- 
+  指定された年月における、全支出明細（ジャンル名付き）を取得するSQL。
+  支出一覧やカレンダーの詳細表示に使用される。
+-->
+<select id="selectByMonth" resultMap="ExpenseWithGenreMap">
   SELECT
     e.id,
     e.user_id,
@@ -70,7 +78,22 @@
   ORDER BY e.date
 </select>
 
-  
+<!-- 
+  指定された年月における、日ごとの支出合計金額を取得するSQL。
+  主にカレンダー表示の「日単位の合計金額」などに使用される。
+-->
+<select id="selectDailyTotalByMonth" resultMap="DailyTotalMap">
+  SELECT 
+    EXTRACT(DAY FROM e.date) AS day,
+    SUM(e.amount) AS total
+  FROM expenses e
+  WHERE e.user_id = #{userId}
+    AND EXTRACT(YEAR FROM e.date) = #{year}
+    AND EXTRACT(MONTH FROM e.date) = #{month}
+  GROUP BY day
+  ORDER BY day
+</select>
+
   <!-- 新規登録 -->
   <insert id="insert" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO expenses (user_id, date, genre_id, amount, description)
