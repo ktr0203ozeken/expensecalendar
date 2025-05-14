@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.ozeken.expensecalendar.dto.DailyTotal;
 import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.Expense;
 
@@ -22,6 +23,9 @@ public interface ExpenseMapper {
 	
 	// 月別取得
 	List<ExpenseWithGenre> selectByMonth(@Param("userId") Long userId, @Param("year") int year, @Param("month") int month);
+	
+	//日付合計取得
+	List<DailyTotal> selectDailyTotalByMonth(@Param("userId") Long userId, @Param("year") int year, @Param("month") int month);
 	
 	// 新規登録
 	void insert(Expense expense);

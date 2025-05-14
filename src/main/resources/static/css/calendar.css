@@ -24,7 +24,7 @@ td span {
 }
 
 td .amount {
-    color: red;
+    color: indianred;
     font-weight: bold;
     margin-top: 5px;
 }
@@ -40,3 +40,11 @@ td.empty {
     justify-content: left;
     flex-wrap: wrap;
 }
+
+.total-amount {
+    color:red;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+    
