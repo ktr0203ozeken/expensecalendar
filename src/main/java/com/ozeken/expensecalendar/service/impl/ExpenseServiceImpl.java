@@ -15,66 +15,69 @@ import com.ozeken.expensecalendar.service.ExpenseService;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * 支出に関するサービス実装クラス
+ * 
+ * @author ozeken
+ */
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class ExpenseServiceImpl implements ExpenseService {
 
-	/**DI*/
-	private final ExpenseMapper expenseMapper;
-	
-	// ------- 取得 --------
-	@Override
-	public List<ExpenseWithGenre> findAllWithGenre(Long userId) {
-	    return expenseMapper.selectWithGenreByUserId(userId);
-	}
-	
-	@Override
-	public ExpenseWithGenre findByIdWithGenre(Long id, Long userId) {
-		return expenseMapper.selectWithGenreByIdAndUserId(id, userId);
-	}
-	
-	@Override
-	public Expense findById(Long id, Long userId) {
-		return expenseMapper.selectByIdAndUserId(id, userId);
-	}
-	
-	// 月別取得
-	@Override
-	public List<ExpenseWithGenre> findByMonth(Long userId, int year, int month) {
-		return expenseMapper.selectByMonth(userId, year, month);
-	}
-	
-	// 日付合計取得
-	@Override
-	public List<DailyTotal> findDailyTotalByMonth(Long userId, int year, int month) {
-		return expenseMapper.selectDailyTotalByMonth(userId, year, month);
-	}
+    // DI対象（データアクセス層）
+    private final ExpenseMapper expenseMapper;
 
-	@Override
-    // カレンダー表示用：日別に支出をまとめる
+    // ------- 取得処理 -----------------------------------------------
+
+    @Override
+    public List<ExpenseWithGenre> findAllWithGenre(Long userId) {
+        return expenseMapper.selectWithGenreByUserId(userId);
+    }
+
+    @Override
+    public ExpenseWithGenre findByIdWithGenre(Long id, Long userId) {
+        return expenseMapper.selectWithGenreByIdAndUserId(id, userId);
+    }
+
+    @Override
+    public Expense findById(Long id, Long userId) {
+        return expenseMapper.selectByIdAndUserId(id, userId);
+    }
+
+    @Override
+    public List<ExpenseWithGenre> findByMonth(Long userId, int year, int month) {
+        return expenseMapper.selectByMonth(userId, year, month);
+    }
+
+    @Override
+    public List<DailyTotal> findDailyTotalByMonth(Long userId, int year, int month) {
+        return expenseMapper.selectDailyTotalByMonth(userId, year, month);
+    }
+
+    @Override
     public Map<Integer, List<ExpenseWithGenre>> groupByDayOfMonth(Long userId, int year, int month) {
         List<ExpenseWithGenre> expenses = findByMonth(userId, year, month);
-        //streamでデータを流し込み、getDateで年月日を取得、
-        //getDayOfMonthで日にちのみ(1~31の整数)を取得、Collectors.groupingByでグループ化(mapの形式に変換)
-        return expenses.stream().collect(Collectors.groupingBy(exp -> exp.getDate().getDayOfMonth()));
+        // 日にちごとに支出をグループ化（1〜31をキーにグループ化）
+        return expenses.stream()
+                       .collect(Collectors.groupingBy(exp -> exp.getDate().getDayOfMonth()));
     }
-	
-	
-	// ------- 登録・更新・削除 --------
-	@Override
-	public void insert(Expense expense) {
-		expenseMapper.insert(expense);
-	}
 
-	@Override
-	public void update(Expense expense) {
-		expenseMapper.update(expense);
-	}
+    
+    // ------- 登録・更新・削除 -----------------------------------------
 
-	@Override
-	public void delete(Long id, Long userId) {
-		expenseMapper.deleteByIdAndUserId(id, userId);
-	}
+    @Override
+    public void insert(Expense expense) {
+        expenseMapper.insert(expense);
+    }
 
+    @Override
+    public void update(Expense expense) {
+        expenseMapper.update(expense);
+    }
+
+    @Override
+    public void delete(Long id, Long userId) {
+        expenseMapper.deleteByIdAndUserId(id, userId);
+    }
 }
