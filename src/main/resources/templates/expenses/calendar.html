@@ -18,6 +18,9 @@
         <a th:href="@{/expenses/calendar(year=${prevYear}, month=${prevMonth})}" class="button">← 前の月</a>
         <a th:href="@{/expenses/calendar(year=${nextYear}, month=${nextMonth})}" class="button">次の月 →</a>
     </div>
+    
+    <h2 class="calendar-instruction">◎日にちをクリックで支出リストを表示</h2>
+    <br>
 
 
 
@@ -51,7 +54,10 @@
 
                     <!-- 日付と支出 -->
                     <div th:if="${cellIndex >= firstDayOfWeek and dateNum <= daysInMonth}">
-                        <span th:text="${dateNum}"></span><br>
+                        <a th:href="@{/expenses/calendar/day(year=${year}, month=${month}, day=${dateNum})}"
+                               th:text="${dateNum}"
+                               class="calendar-date-link">
+                            </a><br>
 
 
                         <!-- 合計金額の表示 -->
