@@ -44,14 +44,25 @@ public interface ExpenseService {
     Expense findById(Long id, Long userId);
 
     /**
-     * 指定年月に該当する支出一覧を取得します（ジャンル名付き）
+     * 指定年月（一か月分）に該当する支出一覧を取得します（ジャンル名付き）
      *
      * @param userId ユーザーID
      * @param year 年（例：2025）
      * @param month 月（1〜12）
-     * @return 支出リスト
+     * @return 支出リスト（ジャンル名付き）
      */
     List<ExpenseWithGenre> findByMonth(Long userId, int year, int month);
+    
+    /**
+	 * 指定年月日（一日分）の支出を取得します（ジャンル名付き）
+	 *
+	 * @param userId ユーザーID
+	 * @param year 年
+	 * @param month 月
+	 * @param day 日
+	 * @return 支出リスト（ジャンル名付き）
+	 */
+    List<ExpenseWithGenre> findWithGenreByDay(Long userId, int year, int month, int day);
 
     /**
      * 指定月の日別支出合計を取得します
