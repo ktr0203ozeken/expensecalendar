@@ -1,8 +1,6 @@
 package com.ozeken.expensecalendar.service.impl;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,18 +47,15 @@ public class ExpenseServiceImpl implements ExpenseService {
     public List<ExpenseWithGenre> findByMonth(Long userId, int year, int month) {
         return expenseMapper.selectByMonth(userId, year, month);
     }
+    
+    @Override
+	public List<ExpenseWithGenre> findWithGenreByDay(Long userId, int year, int month, int day) {
+		return expenseMapper.selectWithGenreByDay(userId, year, month, day);
+	}
 
     @Override
     public List<DailyTotal> findDailyTotalByMonth(Long userId, int year, int month) {
         return expenseMapper.selectDailyTotalByMonth(userId, year, month);
-    }
-
-    @Override
-    public Map<Integer, List<ExpenseWithGenre>> groupByDayOfMonth(Long userId, int year, int month) {
-        List<ExpenseWithGenre> expenses = findByMonth(userId, year, month);
-        // 日にちごとに支出をグループ化（1〜31をキーにグループ化）
-        return expenses.stream()
-                       .collect(Collectors.groupingBy(exp -> exp.getDate().getDayOfMonth()));
     }
 
     
