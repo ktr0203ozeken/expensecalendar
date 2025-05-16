@@ -33,7 +33,7 @@ a.bottom-link {
 }
 
 /* データなしの行 */
-td[colspan="5"] {
+.no-data {
     text-align: center;
     padding: 20px;
     color: #777;

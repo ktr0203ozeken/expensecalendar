@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${year} + '年' + ${month} + '月' + ${day} + '日の支出一覧'">支出一覧</title>
+    <link rel="stylesheet" th:href="@{/css/ress.min.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/list.css}">
+</head>
+<body>
+    
+    <div class="container">
+
+    <h1 th:text="${year} + '年' + ${month} + '月' + ${day} + '日の支出一覧'">yyyy年mm月dd日の支出一覧</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ジャンル</th>
+                <th>金額</th>
+                <th>メモ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="expense : ${expenses}">
+                <td th:text="${expense.genreName}">食費</td>
+                <td th:text="'￥' + ${expense.amount}">￥1000</td>
+                <td th:text="${expense.description}">ランチ</td>
+            </tr>
+            
+            <tr th:if="${#lists.isEmpty(expenses)}">
+                           <td colspan="3" class="no-data">データはありません</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    <br>
+    
+        <a th:href="@{/expenses/calendar(year=${year}, month=${month})}" class="button">← カレンダーに戻る</a>
+    
+    </div>
+
+</body>
+</html>
