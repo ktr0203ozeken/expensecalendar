@@ -33,6 +33,16 @@ td.empty {
     background-color: #f9f9f9;
 }
 
+.calendar-instruction {
+    font-size: 1.2em;
+    background-color: aliceblue;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
 .calendar-controls {
     display: flex;
     gap: 10px;
@@ -47,4 +57,17 @@ td.empty {
     font-weight: bold;
     margin-top: 10px;
 }
-    
+
+.calendar-date-link {
+    font-size: 1.4em;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+
+.calendar-date-link:hover {
+    color: #007bff;
+    transform: scale(1.1); /* ホバー時に拡大 */
+}
