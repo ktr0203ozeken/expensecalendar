@@ -28,6 +28,15 @@ public class CalendarViewController {
 
     private final ExpenseService expenseService;
 
+    /**
+	 * 家計簿カレンダー表示
+	 * 
+	 * @param year  年
+	 * @param month 月
+	 * @param model モデル
+	 * @param loginUser ログインユーザー
+	 * @return カレンダー表示画面
+	 */
     @GetMapping
     public String showCalendar(
             @RequestParam(value = "year", required = false) Integer year,
@@ -77,4 +86,36 @@ public class CalendarViewController {
 
         return "expenses/calendar";
     }
+    
+    /**
+     * 指定年月日（1日分）の支出一覧（ジャンル名付き）を表示します。
+     *
+     * @param year 年
+     * @param month 月
+     * @param day 日
+     * @param loginUser ログインユーザー情報
+     * @param model モデル
+     * @return 詳細表示テンプレート
+     */
+    @GetMapping("/day")
+    public String showExpensesByDay(@RequestParam int year,
+                                     @RequestParam int month,
+                                     @RequestParam int day,
+                                     @AuthenticationPrincipal LoginUser loginUser,
+                                     Model model) {
+        if (loginUser.getAppUser() == null) {
+            return "redirect:/login";
+        }
+
+        Long userId = loginUser.getAppUser().getId();
+        List<ExpenseWithGenre> expenses = expenseService.findWithGenreByDay(userId, year, month, day);
+
+        model.addAttribute("expenses", expenses);
+        model.addAttribute("year", year);
+        model.addAttribute("month", month);
+        model.addAttribute("day", day);
+
+        return "expenses/day";
+    }
+
 }
