@@ -48,10 +48,6 @@ Thumbs.db
 src/main/resources/application-*.properties
 !src/main/resources/application-prod.properties
 
-# test用の設定ファイルも無視
-src/test/resources/application-*.properties
-
-
 # Docker files (optional)
 *.env
 docker-compose.override.yml
