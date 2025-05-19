@@ -6,6 +6,12 @@ CREATE TABLE IF NOT EXISTS users (
     role VARCHAR(20) DEFAULT 'USER'
 );
 
+-- ジャンルテーブルを追加
+CREATE TABLE IF NOT EXISTS genres (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
 -- 支出テーブルを作成
 CREATE TABLE IF NOT EXISTS expenses (
     id          BIGSERIAL PRIMARY KEY,           -- ID
@@ -16,10 +22,4 @@ CREATE TABLE IF NOT EXISTS expenses (
     description TEXT,                                       -- 説明
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT fk_genre FOREIGN KEY (genre_id) REFERENCES genres(id)
-);
-
--- ジャンルテーブルを追加
-CREATE TABLE IF NOT EXISTS genres (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
 );
