@@ -70,6 +70,15 @@ a.button {
     display: inline-block;
 }
 
+.button.primary {
+    background-color: #ffb347;
+    color: white;
+}
+
+.button.primary:hover {
+    background-color: #ff9f00;
+}
+
 button:hover,
 a.button:hover {
     background-color: #5cc1bc;
