@@ -42,6 +42,7 @@ public interface ExpenseService {
      */
     Expense findById(Long id, Long userId);
 
+    // TODO: 月別支出サマリー機能で使用予定（未実装）
     /**
      * 指定年月（一か月分）に該当する支出一覧を取得します（ジャンル名付き）
      *
