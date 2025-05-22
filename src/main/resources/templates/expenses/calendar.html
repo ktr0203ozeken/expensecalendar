@@ -63,16 +63,9 @@
                         <!-- 合計金額の表示 -->
                         <span th:each="dailyTotal : ${dailyTotals}"
                               th:if="${dailyTotal.day == (dateNum)}"
-                              th:text="'合計: ￥' + ${dailyTotal.total}"
+                              th:text="'支出: ￥' + ${dailyTotal.total}"
                               class="total-amount">
                           </span>
-                          
-                        <!-- 金額表示 -->
-                        <span th:each="expense : ${expenses}"
-                              th:if="${expense.date.dayOfMonth == (dateNum)}"
-                              th:text="${expense.genreName} + '￥' + ${expense.amount}"
-                              class="amount">
-                        </span>
                         
                     </div>
                     
