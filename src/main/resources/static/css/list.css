@@ -39,11 +39,19 @@ a.bottom-link {
     color: #777;
 }
 
-.delete {
-    background-color: #f08080 !important;
+.button.detail {
+    background-color: rgb(204, 173, 209);
 }
 
-.delete:hover {
+.button.detail:hover {
+    background-color: rgb(186, 153, 191) !important;
+}
+
+.button.delete {
+    background-color: #f08080;
+}
+
+.button.delete:hover {
     background-color: #e06666 !important;
 }
 

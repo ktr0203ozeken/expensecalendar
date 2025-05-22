@@ -13,6 +13,11 @@
     <div class="container">
     
     <h1>家計簿一覧</h1>
+    <br>
+    <a th:href="@{/expenses/new}"  class="button register">新しい支出を登録する</a> |
+        <a th:href="@{/expenses/calendar}" class="button primary">カレンダーで見る</a>
+        <br>
+        <br>
 
     <table border="1">
         <thead>
@@ -33,7 +38,7 @@
                 <td th:text="${expense.description}"></td>
                 <td>
                     <!-- 詳細リンク -->
-                    <a th:href="@{/expenses/{id}(id=${expense.id})}" class="button">詳細</a> |
+                    <a th:href="@{/expenses/{id}(id=${expense.id})}" class="button detail">詳細</a> |
                     <!-- 編集リンク -->
                     <a th:href="@{/expenses/edit/{id}(id=${expense.id})}" class="button">編集</a> |
                     <!-- 削除リンク -->
@@ -48,11 +53,6 @@
             </tr>
         </tbody>
     </table>
-
-    <br>
-
-    <a th:href="@{/expenses/new}"  class="button">新しい支出を登録する</a> |
-    <a th:href="@{/expenses/calendar}" class="button">カレンダーで見る</a>
     
     </div>
     
