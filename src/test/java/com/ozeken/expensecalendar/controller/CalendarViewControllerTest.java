@@ -46,7 +46,6 @@ class CalendarViewControllerTest {
     	SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // 認証されたユーザーのIDをモック
-        Mockito.when(expenseService.findByMonth(1L, 2025, 5)).thenReturn(List.of());
         Mockito.when(expenseService.findDailyTotalByMonth(1L, 2025, 5)).thenReturn(List.of());
 
         mockMvc.perform(get("/expenses/calendar")
@@ -54,6 +53,6 @@ class CalendarViewControllerTest {
                 .param("month", "5"))
             .andExpect(status().isOk())
             .andExpect(view().name("expenses/calendar"))
-            .andExpect(model().attributeExists("expenses", "dailyTotals"));
+            .andExpect(model().attributeExists("dailyTotals"));
     }
 }

@@ -26,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CalendarViewController {
 
+	//DI
     private final ExpenseService expenseService;
 
     /**
@@ -60,9 +61,8 @@ public class CalendarViewController {
         if (loginUser.getAppUser() == null) {
             return "redirect:/login";
         }
-        //指定された年月の家計簿を取得
+        
         Long userId = loginUser.getAppUser().getId();
-        List<ExpenseWithGenre> expenses = expenseService.findByMonth(userId,currentYear, currentMonth);
         //指定された年月の日別合計を取得
         List<DailyTotal> dailyTotals = expenseService.findDailyTotalByMonth(userId, currentYear, currentMonth);
         
@@ -74,7 +74,6 @@ public class CalendarViewController {
 
         model.addAttribute("year", currentYear);
         model.addAttribute("month", currentMonth);
-        model.addAttribute("expenses", expenses);
         model.addAttribute("dailyTotals", dailyTotals);
         model.addAttribute("firstDayOfWeek", firstDayOfWeek);
         model.addAttribute("daysInMonth", daysInMonth);
