@@ -34,7 +34,7 @@ public class SecurityConfig {
             .formLogin(form -> form
                 .loginPage("/login")
                 //すべてのユーザーに"/expenses"にリダイレクト
-                .defaultSuccessUrl("/expenses", true)
+                .defaultSuccessUrl("/expenses/calendar", true)
                 //ログイン失敗時のリダイレクト先
                 .failureUrl("/login?error=true")
                 .permitAll()
