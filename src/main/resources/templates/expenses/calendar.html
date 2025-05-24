@@ -12,14 +12,15 @@
     <h1 th:text="${year} + '年' + ${month} + '月の家計簿'"></h1>
     <br>
     <div>
-    <a th:href="@{/expenses}" class="button">一覧に戻る</a>
+    <a th:href="@{/expenses}" class="button primary">一覧へ</a> |
+    <a th:href="@{/expenses/new}"  class="button register">新しい支出を登録する</a>
     <div>
     <div class="calendar-controls">
         <a th:href="@{/expenses/calendar(year=${prevYear}, month=${prevMonth})}" class="button">← 前の月</a>
         <a th:href="@{/expenses/calendar(year=${nextYear}, month=${nextMonth})}" class="button">次の月 →</a>
     </div>
     
-    <h2 class="calendar-instruction">◎日にちをクリックで支出リストを表示</h2>
+    <h2 class="calendar-instruction">⇩ ◎日にちをクリックその日の支出一覧を表示 ⇩</h2>
     <br>
 
 
@@ -54,7 +55,7 @@
 
                     <!-- 日付と支出 -->
                     <div th:if="${cellIndex >= firstDayOfWeek and dateNum <= daysInMonth}">
-                        <a th:href="@{/expenses/calendar/day(year=${year}, month=${month}, day=${dateNum})}"
+                        <a th:href="@{/expenses/day(year=${year}, month=${month}, day=${dateNum})}"
                                th:text="${dateNum}"
                                class="calendar-date-link">
                             </a><br>
@@ -63,7 +64,7 @@
                         <!-- 合計金額の表示 -->
                         <span th:each="dailyTotal : ${dailyTotals}"
                               th:if="${dailyTotal.day == (dateNum)}"
-                              th:text="'支出: ￥' + ${dailyTotal.total}"
+                              th:text="'支出: ￥' + ${#numbers.formatInteger({dailyTotal.total},0,'COMMA')}"
                               class="total-amount">
                           </span>
                         

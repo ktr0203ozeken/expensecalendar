@@ -11,7 +11,7 @@
     <h1 th:text="${expenseForm.id} != null ? '支出の編集' : '支出の登録'"></h1>
 
     <!-- フォーム開始 -->
-    <form th:action="@{/expenses}" th:object="${expenseForm}" method="post">
+    <form th:action="@{${postUrl}}" th:object="${expenseForm}" method="post">
         
 
          <!-- hiddenのid（編集時用） -->
@@ -52,7 +52,7 @@
 
         <!-- 送信ボタン -->
         <div class="form-group">
-            <button type="submit" th:text="${expenseForm.id} != null ? '更新' : '登録'"></button>
+            <button type="submit" th:text="${expenseForm.id} != null ? '更新' : '登録'" class="button register"></button>
         </div>
 
     </form>
@@ -61,7 +61,7 @@
 
     <!-- 一覧に戻るリンク -->
     <div class="return-wrapper" >
-    <a th:href="@{/expenses}" class="return-button">一覧に戻る</a>
+        <a th:href="@{${returnUrl}}" class="return-button">一覧に戻る</a>
     </div>
 
 </body>

@@ -45,6 +45,9 @@ public class ExpenseController {
 	@GetMapping("/new")
 	public String showCreateForm(Model model) {
 		model.addAttribute("expenseForm", new ExpenseForm());
+		model.addAttribute("postUrl", "/expenses");
+		model.addAttribute("returnUrl", "/expenses");
+		
 		return "expenses/form";
 	}
 
@@ -59,6 +62,8 @@ public class ExpenseController {
 		}
 		ExpenseForm expenseForm = ExpenseHelper.convertToExpenseForm(expense);
 		model.addAttribute("expenseForm", expenseForm);
+		model.addAttribute("postUrl", "/expenses");
+		model.addAttribute("returnUrl", "/expenses");
 		return "expenses/form";
 	}
 		
@@ -69,6 +74,7 @@ public class ExpenseController {
 	    Long userId = loginUser.getAppUser().getId();
 	    ExpenseWithGenre expense = expenseService.findByIdWithGenre(id, userId);
 	    model.addAttribute("expense", expense);
+	    model.addAttribute("returnUrl", "/expenses");
 	    return "expenses/detail";
 	}
 
@@ -82,6 +88,8 @@ public class ExpenseController {
 		
 		if (result.hasErrors()) {
 			model.addAttribute("expenseForm", expenseForm);
+			model.addAttribute("postUrl", "/expenses");
+			model.addAttribute("returnUrl", "/expenses");
 			return "expenses/form";
 		}
 

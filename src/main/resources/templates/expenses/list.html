@@ -14,8 +14,8 @@
     
     <h1>家計簿一覧</h1>
     <br>
-    <a th:href="@{/expenses/new}"  class="button register">新しい支出を登録する</a> |
-        <a th:href="@{/expenses/calendar}" class="button primary">カレンダーで見る</a>
+    <a th:href="@{/expenses/calendar}" class="button primary">← カレンダーに戻る</a> |
+    <a th:href="@{/expenses/new}"  class="button register">新しい支出を登録する</a>
         <br>
         <br>
 
@@ -34,7 +34,7 @@
             <tr th:each="expense : ${expenses}">
                 <td th:text="${expense.date}"></td>
                 <td th:text="${expense.genreName}"></td>
-                <td th:text="${expense.amount}"></td>
+                <td th:text="'¥' + ${#numbers.formatInteger(expense.amount, 0, 'COMMA')}">¥1,000</td>
                 <td th:text="${expense.description}"></td>
                 <td>
                     <!-- 詳細リンク -->
