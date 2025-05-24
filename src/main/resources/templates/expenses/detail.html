@@ -21,7 +21,7 @@
         </tr>
         <tr>
             <th>金額</th>
-            <td th:text="${expense.amount}"></td>
+            <td th:text="'¥' + ${#numbers.formatInteger(expense.amount, 0, 'COMMA')}">¥1,000</td>
         </tr>
         <tr>
             <th>説明</th>
@@ -32,7 +32,7 @@
     <br>
 
     <div class="return-wrapper">
-    <a th:href="@{/expenses}" class="return-button">一覧に戻る</a>
+    <a th:href="${returnUrl}" class="return-button">一覧に戻る</a>
     </div>
 </body>
 </html>
