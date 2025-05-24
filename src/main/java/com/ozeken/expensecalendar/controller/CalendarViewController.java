@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ozeken.expensecalendar.dto.DailyTotal;
-import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.LoginUser;
 import com.ozeken.expensecalendar.service.ExpenseService;
 
@@ -86,35 +85,4 @@ public class CalendarViewController {
         return "expenses/calendar";
     }
     
-    /**
-     * 指定年月日（1日分）の支出一覧（ジャンル名付き）を表示します。
-     *
-     * @param year 年
-     * @param month 月
-     * @param day 日
-     * @param loginUser ログインユーザー情報
-     * @param model モデル
-     * @return 詳細表示テンプレート
-     */
-    @GetMapping("/day")
-    public String showExpensesByDay(@RequestParam int year,
-                                     @RequestParam int month,
-                                     @RequestParam int day,
-                                     @AuthenticationPrincipal LoginUser loginUser,
-                                     Model model) {
-        if (loginUser.getAppUser() == null) {
-            return "redirect:/login";
-        }
-
-        Long userId = loginUser.getAppUser().getId();
-        List<ExpenseWithGenre> expenses = expenseService.findWithGenreByDay(userId, year, month, day);
-
-        model.addAttribute("expenses", expenses);
-        model.addAttribute("year", year);
-        model.addAttribute("month", month);
-        model.addAttribute("day", day);
-
-        return "expenses/day";
-    }
-
 }

@@ -12,6 +12,10 @@
     <div class="container">
 
     <h1 th:text="${year} + '年' + ${month} + '月' + ${day} + '日の支出一覧'">yyyy年mm月dd日の支出一覧</h1>
+    <br>
+        <a th:href="@{/expenses/day/new(year=${year}, month=${month}, day=${day})}"  class="button register">新しい支出を登録する</a>
+            <br>
+            <br>
 
     <table border="1">
         <thead>
@@ -19,17 +23,35 @@
                 <th>ジャンル</th>
                 <th>金額</th>
                 <th>メモ</th>
+                <th>操作</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="expense : ${expenses}">
                 <td th:text="${expense.genreName}">食費</td>
-                <td th:text="'￥' + ${expense.amount}">￥1000</td>
+                <td th:text="'￥' + ${#numbers.formatInteger(expense.amount, 0, 'COMMA')}">￥1,000</td>
                 <td th:text="${expense.description}">ランチ</td>
+                <td>
+                    <!-- 詳細リンク -->
+                    <a th:href="@{'/expenses/day/'+${expense.id}+
+                                  '?year='+${year}+'&month='+${month}+'&day='+${day}}"
+                       class="button detail">詳細</a> |
+
+                    <!-- 編集リンク -->
+                    <a th:href="@{'/expenses/day/edit/'+${expense.id}+
+                                  '?year='+${year}+'&month='+${month}+'&day='+${day}}"
+                       class="button">編集</a> |
+                    <!-- 削除リンク -->
+                    <a th:href="@{'/expenses/day/delete/'+${expense.id}+
+                                  '?year=' + ${year} + '&month='+${month}+'&day='+${day}}"
+                       onclick="return confirm('本当に削除しますか？');"
+                       class="button delete">削除</a>
+
+                </td>
             </tr>
             
             <tr th:if="${#lists.isEmpty(expenses)}">
-                           <td colspan="3" class="no-data">データはありません</td>
+                           <td colspan="4" class="no-data">データはありません</td>
             </tr>
             
         </tbody>
@@ -37,7 +59,7 @@
     
     <br>
     
-        <a th:href="@{/expenses/calendar(year=${year}, month=${month})}" class="button">← カレンダーに戻る</a>
+        <a th:href="@{/expenses/calendar(year=${year}, month=${month})}" class="button primary">← カレンダーに戻る</a>
     
     </div>
 

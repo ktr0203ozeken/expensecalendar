@@ -70,12 +70,15 @@ a.button {
     display: inline-block;
 }
 
-.button.primary {
+.button.primary,
+.return-button.primary {
     background-color: #ffb347;
     color: white;
 }
 
-.button.primary:hover {
+
+.button.primary:hover,
+.return-button.primary:hover {
     background-color: #ff9f00;
 }
 
@@ -103,6 +106,10 @@ button.login:hover,
 .return-button:hover {
     border-color: #5cc1bc;
     text-decoration: underline;
+}
+
+.register {
+    background-color: lightgreen !important;
 }
 
 /* 戻るボタン */
