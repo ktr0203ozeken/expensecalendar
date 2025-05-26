@@ -97,10 +97,19 @@ public class ExpenseController {
 		expenseForm.setUserId(userId);
 		Expense expense = ExpenseHelper.convertToExpense(expenseForm);
 
+		try {
 		if (expense.getId() == null) {
 			expenseService.insert(expense);
 		} else {
 			expenseService.update(expense);
+		}
+	}catch (IllegalArgumentException e) {
+	//オーバーフローが発生した場合のエラーメッセージを設定
+		model.addAttribute("errorMessage", e.getMessage());
+		model.addAttribute("expenseForm", expenseForm);
+		model.addAttribute("postUrl", "/expenses");
+		model.addAttribute("returnUrl", "/expenses");
+		return "expenses/form";
 		}
 
 		return "redirect:/expenses";

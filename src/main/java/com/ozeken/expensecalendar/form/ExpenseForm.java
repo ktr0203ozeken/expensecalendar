@@ -31,8 +31,8 @@ public class ExpenseForm {
 	// 金額
 	@NotNull(message = "金額を入力してください")
 	@Min(value = 1, message = "金額は1以上で入力してください")
-	@Max(value = 2147483647, message = "金額は2147483647以下で入力してください")
-	private Integer amount;
+	@Max(value = 1000000000, message = "金額は10億円以下で入力してください")
+	private Long amount;
 
 	// 説明
 	@Size(max = 255, message = "説明は255文字以内で入力してください")
