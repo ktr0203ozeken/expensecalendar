@@ -75,6 +75,13 @@ public interface ExpenseMapper {
         @Param("day") int day);
 
     /**
+     * 合計金額を取得
+     * 
+     * @param userId ユーザーID
+     */
+    Long selectTotalAmountByUserId(@Param("userId") Long userId);
+    
+    /**
      * 指定月の日別支出合計を取得（1日ごとの合計）
      *
      * @param userId ユーザーID

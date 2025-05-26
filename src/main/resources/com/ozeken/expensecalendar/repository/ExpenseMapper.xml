@@ -101,6 +101,17 @@
 </select>
 
 <!-- 
+  指定されたユーザーIDに紐づく、全支出の合計金額を取得するSQL。
+  金額の合計が `long` の上限を超えないようにするため、
+  登録前に現在の合計を取得し、オーバーフロー対策として使用される。
+-->
+<select id="selectTotalAmountByUserId" resultType="long">
+  SELECT COALESCE(SUM(amount), 0)
+  FROM expenses
+  WHERE user_id = #{userId}
+</select>
+
+<!-- 
   指定された年月における、日ごとの支出合計金額を取得するSQL。
   主にカレンダー表示の「日単位の合計金額」などに使用される。
 -->

@@ -44,6 +44,11 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
+    public Long findTotalAmountByUserId(Long userId) {
+		return expenseMapper.selectTotalAmountByUserId(userId);
+	}
+		
+    @Override
     public List<ExpenseWithGenre> findByMonth(Long userId, int year, int month) {
         return expenseMapper.selectByMonth(userId, year, month);
     }
@@ -63,13 +68,49 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public void insert(Expense expense) {
+        Long currentTotal = expenseMapper.selectTotalAmountByUserId(expense.getUserId());
+        if (currentTotal == null) {
+			currentTotal = 0L; // 初期値として0を設定
+		}
+        
+        // 足すとオーバーフローするかを事前にチェック
+        if (willOverflow(currentTotal, expense.getAmount())) {
+            throw new IllegalArgumentException("合計金額が上限を超えるため、登録できません。");
+        }
+
         expenseMapper.insert(expense);
     }
-
+    
     @Override
     public void update(Expense expense) {
+    	Long currentTotal = expenseMapper.selectTotalAmountByUserId(expense.getUserId());
+    	if (currentTotal == null) {
+    		currentTotal = 0L; // 初期値として0を設定
+    	}
+    	// 更新前の金額を取得
+    	Expense existingExpense = expenseMapper.selectByIdAndUserId(expense.getId(), expense.getUserId());
+    	if (existingExpense == null) {
+    		throw new IllegalArgumentException("更新対象の支出が存在しません。");
+    	}
+    	Long amountDifference = expense.getAmount() - existingExpense.getAmount();
+    	// 足すとオーバーフローするかを事前にチェック
+    	if (willOverflow(currentTotal, amountDifference)) {
+			throw new IllegalArgumentException("合計金額が上限を超えるため、更新できません。");
+		}
         expenseMapper.update(expense);
     }
+    /**
+     * 合計金額がオーバーフローするかをチェックします。
+     * @param currentTotal
+     * @param amountToAdd
+     * @return オーバーフローする場合はtrue
+     */
+    private boolean willOverflow(Long currentTotal, Long amountToAdd) {
+    	// 現在の合計金額と追加する金額を足して、longの範囲を超えるかをチェック
+		return (amountToAdd > 0 && currentTotal > Long.MAX_VALUE - amountToAdd) ||
+				// 負の値を足す場合、現在の合計金額がlongの最小値を下回るかをチェック
+			   (amountToAdd < 0 && currentTotal < Long.MIN_VALUE - amountToAdd);
+	}
 
     @Override
     public void delete(Long id, Long userId) {
