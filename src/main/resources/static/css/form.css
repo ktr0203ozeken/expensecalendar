@@ -53,3 +53,7 @@ textarea {
     background-color: #fff;
     box-sizing: border-box;
 }
+
+.hint {
+    color: #888;
+}
