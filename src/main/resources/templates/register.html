@@ -20,11 +20,15 @@
         
         <label for="username">ユーザー名：</label>
         <input type="text" th:field="*{username}" /><br>
+        <small class="hint">ユーザー名は4〜20文字、英数字、アンダースコア(_)とドット(.)が使えます。</small>
+        <br>
         <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-message"></span>
         <br>
 
         <label for="password">パスワード：</label>
         <input type="password" th:field="*{password}" /><br>
+        <small class="hint">パスワードは英字と数字を含む8〜30文字にしてください。</small>
+        <br>
         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></span>
         <br>
         
