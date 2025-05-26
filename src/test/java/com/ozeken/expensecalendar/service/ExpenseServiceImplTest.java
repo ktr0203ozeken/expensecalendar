@@ -39,7 +39,7 @@ class ExpenseServiceImplTest {
 		expense.setUserId(TEST_USER_ID);
 		expense.setDate(LocalDate.now());
 		expense.setGenreId(1);
-		expense.setAmount(1234);
+		expense.setAmount(1234L);
 		expense.setDescription("テスト登録");
 
 		expenseService.insert(expense);
@@ -57,7 +57,7 @@ class ExpenseServiceImplTest {
 		expense.setUserId(TEST_USER_ID);
 		expense.setDate(LocalDate.now());
 		expense.setGenreId(1);
-		expense.setAmount(5678);
+		expense.setAmount(5678L);
 		expense.setDescription("更新前説明");
 
 		expenseService.insert(expense);
@@ -83,7 +83,7 @@ class ExpenseServiceImplTest {
 		expense.setUserId(TEST_USER_ID);
 		expense.setDate(LocalDate.now());
 		expense.setGenreId(1);
-		expense.setAmount(9999);
+		expense.setAmount(9999L);
 		expense.setDescription("削除対象");
 
 		expenseService.insert(expense);
