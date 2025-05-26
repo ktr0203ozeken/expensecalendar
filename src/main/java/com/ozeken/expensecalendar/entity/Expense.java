@@ -20,7 +20,7 @@ public class Expense {
 	private Integer genreId;
 
 	// 金額
-	private Integer amount;
+	private Long amount;
 
 	// 説明
 	private String description;

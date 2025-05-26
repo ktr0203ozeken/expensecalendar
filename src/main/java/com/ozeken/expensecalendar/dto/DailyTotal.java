@@ -9,6 +9,6 @@ public class DailyTotal {
 	private int day;
 	
 	// 合計金額
-	private Integer total;
+	private Long total;
 	
 }
