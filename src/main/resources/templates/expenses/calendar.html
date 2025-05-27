@@ -20,7 +20,9 @@
         <a th:href="@{/expenses/calendar(year=${nextYear}, month=${nextMonth})}" class="button">次の月 →</a>
     </div>
     
-    <h2 class="calendar-instruction">⇩ ◎日にちをクリックその日の支出一覧を表示 ⇩</h2>
+    <!-- 月の合計金額表示 -->
+    <div class="monthly-total-amount" th:text="'月の合計：¥' + ${monthlyTotal}"></div>
+    <h2 class="calendar-instruction">⇩ ◎日にちをクリックでその日の支出一覧を表示 ⇩</h2>
     <br>
 
 
@@ -65,7 +67,7 @@
                         <span th:each="dailyTotal : ${dailyTotals}"
                               th:if="${dailyTotal.day == (dateNum)}"
                               th:text="'支出: ￥' + ${#numbers.formatInteger({dailyTotal.total},0,'COMMA')}"
-                              class="total-amount">
+                              class="daily-total-amount">
                           </span>
                         
                     </div>
