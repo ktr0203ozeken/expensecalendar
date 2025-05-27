@@ -26,12 +26,19 @@ public class ExpenseServiceImpl implements ExpenseService {
     // DI対象（データアクセス層）
     private final ExpenseMapper expenseMapper;
 
-    // ------- 取得処理 -----------------------------------------------
+    // ------- 取得処理 (リスト) -----------------------------------------
 
     @Override
     public List<ExpenseWithGenre> findAllWithGenre(Long userId) {
         return expenseMapper.selectWithGenreByUserId(userId);
     }
+    
+    @Override
+	public List<ExpenseWithGenre> findWithGenreByDay(Long userId, int year, int month, int day) {
+		return expenseMapper.selectWithGenreByUserIdAndDay(userId, year, month, day);
+	}
+    
+    // ------- 取得処理 (一件) -----------------------------------------
 
     @Override
     public ExpenseWithGenre findByIdWithGenre(Long id, Long userId) {
@@ -50,27 +57,15 @@ public class ExpenseServiceImpl implements ExpenseService {
 		return expenseMapper.selectTotalAmountByUserId(userId);
 	}
     @Override
-    public Long findMonthlyTotal(Long userId, int year, int month) {
-    	return expenseMapper.selectMonthlyTotal(userId, year, month);
-	}
-    
-    // ------- 月別支出取得処理 -----------------------------------------
-		
-    @Override
-    public List<ExpenseWithGenre> findByMonth(Long userId, int year, int month) {
-        return expenseMapper.selectByMonth(userId, year, month);
-    }
-    
-    @Override
-	public List<ExpenseWithGenre> findWithGenreByDay(Long userId, int year, int month, int day) {
-		return expenseMapper.selectWithGenreByDay(userId, year, month, day);
+    public Long findMonthlyTotalByUserId(Long userId, int year, int month) {
+    	return expenseMapper.selectMonthlyTotalByUserId(userId, year, month);
 	}
     
     // ------- 日別合計取得処理(リスト) -----------------------------------------
 
     @Override
     public List<DailyTotal> findDailyTotalByMonth(Long userId, int year, int month) {
-        return expenseMapper.selectDailyTotalByMonth(userId, year, month);
+        return expenseMapper.selectDailyTotalByUserIdAndMonth(userId, year, month);
     }
 
     
@@ -123,7 +118,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
     @Override
-    public void delete(Long id, Long userId) {
+    public void deleteByIdAndUserId(Long id, Long userId) {
         expenseMapper.deleteByIdAndUserId(id, userId);
     }
 }
