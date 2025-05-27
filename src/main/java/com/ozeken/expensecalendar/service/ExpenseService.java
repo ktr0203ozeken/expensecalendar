@@ -42,13 +42,30 @@ public interface ExpenseService {
      */
     Expense findById(Long id, Long userId);
     
+    
+    // ------- 合計金額取得処理 ------------------------------------------
+    
     /**
      * 合計金額を取得します（ユーザーID指定）
+     * オーバーフローを防ぐ
      * 
      * @param userId ユーザーID
      * @return 合計金額
      */
     Long findTotalAmountByUserId(Long userId);
+    
+    /**
+	 * 指定年月の支出金額合計を一件取得します
+	 *
+	 * @param userId ユーザーID
+	 * @param year 年（例：2025）
+	 * @param month 月（1〜12）
+	 * @return 支出金額合計
+	 */
+    Long findMonthlyTotal(Long userId, int year, int month);
+    
+    
+    // ------- 月別支出取得処理 ------------------------------------------
     
     // TODO: 月別支出サマリー機能で使用予定（未実装）
     /**
@@ -61,6 +78,9 @@ public interface ExpenseService {
      */
     List<ExpenseWithGenre> findByMonth(Long userId, int year, int month);
     
+    
+    // ------- 日別支出取得処理 ------------------------------------------
+    
     /**
 	 * 指定年月日（一日分）の支出を取得します（ジャンル名付き）
 	 *
@@ -72,6 +92,9 @@ public interface ExpenseService {
 	 */
     List<ExpenseWithGenre> findWithGenreByDay(Long userId, int year, int month, int day);
 
+    
+    // ------- 日別合計取得処理(リスト) ------------------------------------------
+    
     /**
      * 指定月の日別支出合計を取得します
      *
