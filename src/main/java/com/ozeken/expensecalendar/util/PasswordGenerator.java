@@ -7,7 +7,7 @@ public class PasswordGenerator {
     public static void main(String[] args) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         
-        String rawPassword = "3"; // ここに生成したいパスワードを入力
+        String rawPassword = "demo"; // ここに生成したいパスワードを入力
         String encodedPassword = encoder.encode(rawPassword);
 
         System.out.println("元のパスワード: " + rawPassword);
