@@ -21,7 +21,7 @@
     </div>
     
     <!-- 月の合計金額表示 -->
-    <div class="monthly-total-amount" th:text="'月の合計：¥' + ${monthlyTotal}"></div>
+    <div class="monthly-total-amount" th:text="'月の合計：¥' + ${#numbers.formatInteger({monthlyTotal},0,'COMMA')}"></div>
     <h2 class="calendar-instruction">⇩ ◎日にちをクリックでその日の支出一覧を表示 ⇩</h2>
     <br>
 
