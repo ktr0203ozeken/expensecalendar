@@ -120,7 +120,7 @@ public class ExpenseController {
 	public String deleteExpense(@PathVariable("id") Long id,
 			                                     @AuthenticationPrincipal LoginUser loginUser) {
 		Long userId = loginUser.getAppUser().getId();
-		expenseService.delete(id,userId);
+		expenseService.deleteByIdAndUserId(id,userId);
 		return "redirect:/expenses";
 	}
 

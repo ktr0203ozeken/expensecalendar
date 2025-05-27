@@ -64,7 +64,7 @@ public class CalendarViewController {
         Long userId = loginUser.getAppUser().getId();
         
         //指定された年月の月間合計を取得
-        Long monthlyTotal = expenseService.findMonthlyTotal(userId, currentYear, currentMonth);
+        Long monthlyTotal = expenseService.findMonthlyTotalByUserId(userId, currentYear, currentMonth);
         //指定された年月の日別合計を取得(日付と金額のリスト)
         List<DailyTotal> dailyTotals = expenseService.findDailyTotalByMonth(userId, currentYear, currentMonth);
         
