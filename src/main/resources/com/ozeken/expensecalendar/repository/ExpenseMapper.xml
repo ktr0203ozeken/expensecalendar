@@ -18,6 +18,7 @@
     <result property="total" column="total"/>
 </resultMap>
 
+
   <!-- ジャンル名付きで支出一覧を取得 -->
 <select id="selectWithGenreByUserId" resultMap="ExpenseWithGenreMap">
   SELECT
@@ -56,33 +57,12 @@
         WHERE e.id = #{id} AND e.user_id = #{userId}
         ORDER BY e.date DESC
     </select>
-       
-<!-- 
-  指定された年月における、全支出明細（ジャンル名付き）を取得するSQL。
-  支出一覧やカレンダーの詳細表示に使用される。
--->
-<select id="selectByMonth" resultMap="ExpenseWithGenreMap">
-  SELECT
-    e.id,
-    e.user_id,
-    e.date,
-    e.genre_id,
-    g.name AS genre_name,
-    e.amount,
-    e.description
-  FROM expenses e
-  LEFT JOIN genres g ON e.genre_id = g.id
-  WHERE e.user_id = #{userId}
-    AND EXTRACT(YEAR FROM e.date) = #{year}
-    AND EXTRACT(MONTH FROM e.date) = #{month}
-  ORDER BY e.date
-</select>
-
+ 
 <!-- 
   指定された年月日の日付における、全支出明細（ジャンル名付き）を取得するSQL。
   主にカレンダーの詳細表示に使用される。
   -->
-<select id="selectWithGenreByDay" resultMap="ExpenseWithGenreMap">
+<select id="selectWithGenreByUserIdAndDay" resultMap="ExpenseWithGenreMap">
   SELECT 
     e.id,
     e.user_id,
@@ -115,7 +95,7 @@
     指定された年月の支出合計金額を取得するSQL。
     単一の月に絞って、合計金額を1つ返す。
 -->
-<select id="selectMonthlyTotal" resultType="long">
+<select id="selectMonthlyTotalByUserId" resultType="long">
   SELECT 
     COALESCE(SUM(amount), 0)
   FROM expenses
@@ -128,7 +108,7 @@
   指定された年月における、日ごとの支出合計金額を取得するSQL。
   主にカレンダー表示の「日単位の合計金額」などに使用される。
 -->
-<select id="selectDailyTotalByMonth" resultMap="DailyTotalMap">
+<select id="selectDailyTotalByUserIdAndMonth" resultMap="DailyTotalMap">
   SELECT 
     EXTRACT(DAY FROM e.date) AS day,
     SUM(e.amount) AS total
