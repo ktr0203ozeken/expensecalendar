@@ -23,19 +23,13 @@ td span {
     display: block;
 }
 
-td .amount {
-    color: indianred;
-    font-weight: bold;
-    margin-top: 5px;
-}
-
 td.empty {
     background-color: #f9f9f9;
 }
 
 .calendar-instruction {
     font-size: 1.2em;
-    background-color: orangered;
+    background-color: rgb(255, 128, 0);
     font-weight: bold;
     color: #f0f0f0;
     margin-top: 20px;
@@ -51,7 +45,7 @@ td.empty {
     flex-wrap: wrap;
 }
 
-.total-amount {
+.daily-total-amount {
     color:red;
     font-size: 16px;
     font-weight: bold;
@@ -70,4 +64,18 @@ td.empty {
 .calendar-date-link:hover {
     color: #007bff;
     transform: scale(1.1); /* ホバー時に拡大 */
+}
+
+.monthly-total-amount {
+    color: #b71c1c;
+    border-left: 6px solid #d32f2f;
+     background-color: #fff3f3;
+     font-weight: bold;
+     font-size: 1.6em;
+     padding: 12px 20px;
+     border-radius: 6px;
+     margin: 0 0 1em auto;
+     display: block;
+     width: fit-content;
+     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }

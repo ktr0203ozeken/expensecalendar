@@ -62,7 +62,10 @@ public class CalendarViewController {
         }
         
         Long userId = loginUser.getAppUser().getId();
-        //指定された年月の日別合計を取得
+        
+        //指定された年月の月間合計を取得
+        Long monthlyTotal = expenseService.findMonthlyTotal(userId, currentYear, currentMonth);
+        //指定された年月の日別合計を取得(日付と金額のリスト)
         List<DailyTotal> dailyTotals = expenseService.findDailyTotalByMonth(userId, currentYear, currentMonth);
         
         //月初日を取得し,日曜始まりへと変換
@@ -73,6 +76,7 @@ public class CalendarViewController {
 
         model.addAttribute("year", currentYear);
         model.addAttribute("month", currentMonth);
+        model.addAttribute("monthlyTotal", monthlyTotal);
         model.addAttribute("dailyTotals", dailyTotals);
         model.addAttribute("firstDayOfWeek", firstDayOfWeek);
         model.addAttribute("daysInMonth", daysInMonth);
