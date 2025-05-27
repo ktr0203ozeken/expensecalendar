@@ -18,18 +18,36 @@ import com.ozeken.expensecalendar.entity.Expense;
 public interface ExpenseMapper {
 	
 	
-	// ------- 取得処理 ------------------------------------------------------
+	// ------- 取得処理 (リスト) ------------------------------------------------------
 	
     /**
-     * ユーザーIDをもとに、ジャンル名を含む支出一覧を取得（JOIN）
+     * 全期間の支出一覧を取得（ジャンル名付き）
      *
      * @param userId ユーザーID
      * @return 支出リスト（ジャンル名付き）
      */
     List<ExpenseWithGenre> selectWithGenreByUserId(@Param("userId") Long userId);
+    
+    /**
+     * 指定年月日での支出一覧を取得（ジャンル名付き）
+     *
+     * @param userId ユーザーID
+     * @param year 年
+     * @param month 月
+     * @param day 日
+     * @return 支出リスト（ジャンル名付き）
+     */
+    List<ExpenseWithGenre> selectWithGenreByUserIdAndDay(
+        @Param("userId") Long userId,
+        @Param("year") int year,
+        @Param("month") int month,
+        @Param("day") int day);
+
+    
+    // ------- 取得処理 (一件) ------------------------------------------------------
 
     /**
-     * 支出IDとユーザーIDをもとに、ジャンル名を含む支出を1件取得（JOIN）
+     * 支出IDとユーザーIDをもとに、ジャンル名を含む支出を1件取得
      *
      * @param id 支出ID
      * @param userId ユーザーID
@@ -42,38 +60,10 @@ public interface ExpenseMapper {
      *
      * @param id 支出ID
      * @param userId ユーザーID
-     * @return 支出情報
+     * @return 支出情報 （ジャンル名なし）
      */
     Expense selectByIdAndUserId(@Param("id") Long id, @Param("userId") Long userId);
 
-    /**
-     * 指定年月の支出一覧を取得（ジャンル名付き）
-     *
-     * @param userId ユーザーID
-     * @param year 年（例：2025）
-     * @param month 月（1～12）
-     * @return 支出リスト（ジャンル名付き）
-     */
-    List<ExpenseWithGenre> selectByMonth(
-    		@Param("userId") Long userId, 
-    		@Param("year") int year, 
-    		@Param("month") int month);
-
-    /**
-     * 指定年月日での支出一覧を取得（ジャンル名付き）
-     *
-     * @param userId ユーザーID
-     * @param year 年
-     * @param month 月
-     * @param day 日
-     * @return 支出リスト（ジャンル名付き）
-     */
-    List<ExpenseWithGenre> selectWithGenreByDay(
-        @Param("userId") Long userId,
-        @Param("year") int year,
-        @Param("month") int month,
-        @Param("day") int day);
-    
     
     // ------- 合計金額取得処理 ------------------------------------------------------
 
@@ -92,7 +82,7 @@ public interface ExpenseMapper {
 	 * @param month 月
 	 * @return 支出合計金額
 	 */
-    Long selectMonthlyTotal (
+    Long selectMonthlyTotalByUserId (
 			@Param("userId") Long userId, 
 			@Param("year") int year, 
 			@Param("month") int month);
@@ -100,7 +90,6 @@ public interface ExpenseMapper {
     
     // ------- 日別合計取得処理(リスト) -----------------------------------------
     
-    //ToDo:メソッド名のリファクタリング
     /**
      * 指定月の日別支出合計を取得（1日ごとの合計）
      *
@@ -109,7 +98,7 @@ public interface ExpenseMapper {
      * @param month 月
      * @return 日別支出合計リスト
      */
-    List<DailyTotal> selectDailyTotalByMonth(
+    List<DailyTotal> selectDailyTotalByUserIdAndMonth(
     		@Param("userId") Long userId, 
     		@Param("year") int year, 
     		@Param("month") int month);

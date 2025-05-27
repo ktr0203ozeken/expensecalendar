@@ -92,7 +92,7 @@ class ExpenseServiceImplTest {
 		ExpenseWithGenre target = expenses.get(expenses.size() - 1);
 
 		// 削除
-		expenseService.delete(target.getId(), TEST_USER_ID);
+		expenseService.deleteByIdAndUserId(target.getId(), TEST_USER_ID);
 
 		Expense deleted = expenseService.findById(target.getId(), TEST_USER_ID);
 		// 削除されていることを確認
