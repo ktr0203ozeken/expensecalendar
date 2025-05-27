@@ -112,6 +112,19 @@
 </select>
 
 <!-- 
+    指定された年月の支出合計金額を取得するSQL。
+    単一の月に絞って、合計金額を1つ返す。
+-->
+<select id="selectMonthlyTotal" resultType="long">
+  SELECT 
+    COALESCE(SUM(amount), 0)
+  FROM expenses
+  WHERE user_id = #{userId}
+    AND EXTRACT(YEAR FROM date) = #{year}
+    AND EXTRACT(MONTH FROM date) = #{month}
+</select>
+
+<!-- 
   指定された年月における、日ごとの支出合計金額を取得するSQL。
   主にカレンダー表示の「日単位の合計金額」などに使用される。
 -->

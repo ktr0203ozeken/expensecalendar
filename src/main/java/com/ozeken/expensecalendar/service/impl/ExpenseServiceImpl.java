@@ -42,11 +42,19 @@ public class ExpenseServiceImpl implements ExpenseService {
     public Expense findById(Long id, Long userId) {
         return expenseMapper.selectByIdAndUserId(id, userId);
     }
+    
+    // ------- 合計金額取得処理 -----------------------------------------
 
     @Override
     public Long findTotalAmountByUserId(Long userId) {
 		return expenseMapper.selectTotalAmountByUserId(userId);
 	}
+    @Override
+    public Long findMonthlyTotal(Long userId, int year, int month) {
+    	return expenseMapper.selectMonthlyTotal(userId, year, month);
+	}
+    
+    // ------- 月別支出取得処理 -----------------------------------------
 		
     @Override
     public List<ExpenseWithGenre> findByMonth(Long userId, int year, int month) {
@@ -57,6 +65,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 	public List<ExpenseWithGenre> findWithGenreByDay(Long userId, int year, int month, int day) {
 		return expenseMapper.selectWithGenreByDay(userId, year, month, day);
 	}
+    
+    // ------- 日別合計取得処理(リスト) -----------------------------------------
 
     @Override
     public List<DailyTotal> findDailyTotalByMonth(Long userId, int year, int month) {

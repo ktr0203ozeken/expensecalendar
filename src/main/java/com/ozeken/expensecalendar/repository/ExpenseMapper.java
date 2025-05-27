@@ -73,14 +73,34 @@ public interface ExpenseMapper {
         @Param("year") int year,
         @Param("month") int month,
         @Param("day") int day);
+    
+    
+    // ------- 合計金額取得処理 ------------------------------------------------------
 
     /**
-     * 合計金額を取得
+     * 合計金額を取得(全期間)
      * 
      * @param userId ユーザーID
      */
     Long selectTotalAmountByUserId(@Param("userId") Long userId);
     
+    /**
+	 * 指定月の支出合計を取得
+	 *
+	 * @param userId ユーザーID
+	 * @param year 年
+	 * @param month 月
+	 * @return 支出合計金額
+	 */
+    Long selectMonthlyTotal (
+			@Param("userId") Long userId, 
+			@Param("year") int year, 
+			@Param("month") int month);
+    
+    
+    // ------- 日別合計取得処理(リスト) -----------------------------------------
+    
+    //ToDo:メソッド名のリファクタリング
     /**
      * 指定月の日別支出合計を取得（1日ごとの合計）
      *
