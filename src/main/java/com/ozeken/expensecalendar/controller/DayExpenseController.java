@@ -239,7 +239,7 @@ public class DayExpenseController{
 			@AuthenticationPrincipal LoginUser loginUser) {
 		
 		Long userId = loginUser.getAppUser().getId();
-		expenseService.delete(id, userId);
+		expenseService.deleteByIdAndUserId(id, userId);
 		
 		String returnUrl = String.format("/expenses/day?year=%d&month=%d&day=%d", year, month, day);
 		
