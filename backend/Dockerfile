@@ -4,8 +4,8 @@ FROM eclipse-temurin:17-jdk AS build
 WORKDIR /app
 
 # 依存関係をキャッシュするためにビルドに必要なファイルを先にコピー
-COPY build.gradle settings.gradle gradlew gradlew.bat ./  
-COPY gradle ./gradle
+COPY backend/build.gradle backend/settings.gradle backend/gradlew backend/gradlew.bat ./
+COPY backend/gradle ./gradle
 
 # gradlewに実行権限を付与（Linux環境なら必須）
 RUN chmod +x gradlew
