@@ -43,11 +43,6 @@ Thumbs.db
 # Log files
 *.log
 
-# Spring Boot personal config
-# 本番以外の application-*.properties を無視
-src/main/resources/application-*.properties
-!src/main/resources/application-prod.properties
-
 # Docker files (optional)
 *.env
 docker-compose.override.yml
