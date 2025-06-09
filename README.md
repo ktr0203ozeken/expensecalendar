@@ -31,7 +31,7 @@
 | フロントエンド | Thymeleaf, HTML, CSS           |
 | データベース | PostgreSQL                    |
 | ORM        | MyBatis                        |
-| ビルド     | Gradle                         |
+| ビルド     | Gradle / Docker                        |
 | デプロイ   | Heroku / Railway   |
 
 ## ER図
@@ -57,14 +57,14 @@
 
 ## セットアップ手順（ローカル環境）
 
-1. このリポジトリをクローン
+1. このリポジトリをクローンします。
 
     ```bash
     git clone https://github.com/ktr0203ozeken/expensecalendar.git
     cd expensecalendar
     ```
 
-2. PostgreSQL を起動し、必要なデータベースを作成してください。
+2. PostgreSQL を起動し、必要なデータベースとユーザーを作成します。
 
     ```
     データベース名：expensecalendar_db
@@ -72,36 +72,23 @@
     パスワード：your_password
     ```
 
-3. `src/main/resources/application-dev.properties` を新規作成し、DB接続設定を記入
-
-    ```properties
-    spring.sql.init.mode=always
-    spring.datasource.url=jdbc:postgresql://localhost:5432/expensecalendar_db
-    spring.datasource.username=your_user
-    spring.datasource.password=your_password
+3. `.env.example` をもとに `.env` を作成します。
+    
+    ```bash
+    cp .env.example .env
+    nano .env # or your favorite editor
     ```
 
-4. 開発プロファイルを指定（以下いずれか）
-
-   - 起動時に VM 引数で指定（Eclipse/IntelliJ）
-
-     ```
-     -Dspring.profiles.active=dev
-     ```
-
-   - または `src/main/resources/application.properties` を新規作成し、以下を追加
-
-     ```properties
-     spring.profiles.active=dev
-     ```
-
-5. アプリケーションを起動
+4. Docker コンテナをビルド＆起動します。
 
     ```bash
-    ./gradlew bootRun
+    docker compose build
+    docker compose --env-file .env up
     ```
 
-6. ブラウザで `http://localhost:8080` にアクセス  
+5. ブラウザで以下にアクセスしてアプリを確認します。
+
+    [http://localhost:8080](http://localhost:8080)
 
 ## データベース初期化
 
