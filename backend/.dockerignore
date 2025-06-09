@@ -1,0 +1,28 @@
+# Gradle系
+build/
+.gradle/
+gradle-app.setting
+
+# IDE系
+*.iml
+.idea/
+*.log
+*.tmp
+*.swp
+.settings/
+
+# 実行バイナリや中間ファイル
+bin/
+*.class
+*.jar
+
+# Git系
+.git/
+.gitignore
+
+# Docker Secretファイル（特に公開リポジトリでは重要）
+secrets/
+
+# OSごとの不要ファイル
+.DS_Store
+Thumbs.db
