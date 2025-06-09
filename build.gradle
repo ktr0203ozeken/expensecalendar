@@ -2,3 +2,7 @@
 tasks.register("build") {
     dependsOn gradle.includedBuild("backend").task(":build")
 }
+
+tasks.register("stage") {
+    dependsOn("build")
+}
