@@ -1,0 +1,4 @@
+// ルートからbackendのビルドを呼び出す
+tasks.register("build") {
+    dependsOn gradle.includedBuild("backend").task(":build")
+}
