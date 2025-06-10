@@ -1,4 +1,4 @@
-# カレンダー家計簿アプリ
+# カレンダー家計簿アプリ（Docker対応）
 
 このアプリは、**カレンダー形式で支出を管理できる家計簿アプリ**です。日ごとの支出、月ごとの合計金額を一目で確認できるよう設計されています。
 
@@ -55,7 +55,7 @@
 - ユーザー名：`demo`
 - パスワード：`demo`
 
-## セットアップ手順（ローカル環境）
+## セットアップ手順（Docker）
 
 1. このリポジトリをクローンします。
 
@@ -82,7 +82,6 @@
 4. Docker コンテナをビルド＆起動します。
 
     ```bash
-    docker compose build
     docker compose --env-file .env up
     ```
 
@@ -97,16 +96,16 @@
 ```sql
 --ユーザーテーブルを作成
 CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(20) DEFAULT 'USER'
+    id       SERIAL PRIMARY KEY,          -- ID
+    username VARCHAR(50) NOT NULL UNIQUE, -- ユーザー名
+    password VARCHAR(255) NOT NULL,       -- パスワード
+    role     VARCHAR(20) DEFAULT 'USER'   -- 権限
 );
 
 -- ジャンルテーブルを追加
 CREATE TABLE IF NOT EXISTS genres (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
+    id   SERIAL PRIMARY KEY,      -- ID
+    name VARCHAR(50) NOT NULL     -- ジャンル名
 );
 
 -- 支出テーブルを作成
