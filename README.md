@@ -11,7 +11,7 @@
 
 以下のサービスでデプロイ済みです。
 
-- Railway: [https://expensecalendar-production.up.railway.app/](https://expensecalendar-production.up.railway.app/)
+- Heroku: [https://expense-calendar-app-6a9c24a693ce.herokuapp.com/](https://expense-calendar-app-6a9c24a693ce.herokuapp.com/)
 
 ## 主な機能
 
@@ -31,7 +31,7 @@
 | データベース | PostgreSQL                    |
 | ORM        | MyBatis                        |
 | ビルド     | Gradle / Docker                        |
-| デプロイ   | Railway   |
+| デプロイ   | Heroku   |
 
 ## ER図
 
