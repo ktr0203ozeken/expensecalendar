@@ -24,7 +24,14 @@ tasks.register("test") {
     dependsOn gradle.includedBuild("backend").task(":test")
 }
 
-// テストなしでの実行可能JARファイル作成（ローカル, railway用）
+// コード品質チェック（静的解析等, Railway用）
+tasks.register("check") {
+    group = "verification"
+    description = "Runs all verification tasks"
+    dependsOn gradle.includedBuild("backend").task(":check")
+}
+
+// テストなしでの実行可能JARファイル作成（ローカル, Railway用）
 tasks.register("build") {
     group = "build"
     description = "Builds backend application without tests"
