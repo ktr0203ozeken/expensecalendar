@@ -24,16 +24,9 @@ tasks.register("test") {
     dependsOn gradle.includedBuild("backend").task(":test")
 }
 
-// テストなしでの高速ビルド（compileタスクのみ実行）
+// テストなしでの実行可能JARファイル作成（ローカル, railway用）
 tasks.register("build") {
     group = "build"
     description = "Builds backend application without tests"
-    dependsOn("compile")
-}
-
-// Heroku等のデプロイプラットフォーム用
-tasks.register("stage") {
-    group = "build"
-    description = "Prepares application for deployment"
-    dependsOn("build")
+    dependsOn gradle.includedBuild("backend").task(":bootJar")
 }
