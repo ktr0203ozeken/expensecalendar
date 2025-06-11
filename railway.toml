@@ -1,0 +1,6 @@
+[build]
+builder = "nixpacks"
+buildCommand = "cd backend && ./gradlew build --no-daemon"
+
+[deploy]
+startCommand = "cd backend && java -jar build/libs/*.jar"
