@@ -24,16 +24,23 @@ tasks.register("test") {
     dependsOn gradle.includedBuild("backend").task(":test")
 }
 
-// コード品質チェック（静的解析等, Railway用）
+// コード品質チェック（静的解析等）
 tasks.register("check") {
     group = "verification"
     description = "Runs all verification tasks"
     dependsOn gradle.includedBuild("backend").task(":check")
 }
 
-// テストなしでの実行可能JARファイル作成（ローカル, Railway用）
+// テストなしでの実行可能JARファイル作成（ローカル）
 tasks.register("build") {
     group = "build"
     description = "Builds backend application without tests"
     dependsOn gradle.includedBuild("backend").task(":bootJar")
+}
+
+// Heroku等のデプロイプラットフォーム用
+tasks.register("stage") {
+    group = "build"
+    description = "Prepares application for deployment"
+    dependsOn("build")
 }
