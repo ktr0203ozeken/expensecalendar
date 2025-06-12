@@ -1,41 +1,41 @@
 // ==========================================
 // Composite Build用 ルートプロジェクト設定
-// backendプロジェクトのタスクをルートから実行可能にする
+// expensecalendar-backendプロジェクトのタスクをルートから実行可能にする
 // ==========================================
 
 // ビルド成果物の削除
 tasks.register("clean") {
     group = "build"
     description = "Cleans backend build outputs"
-    dependsOn gradle.includedBuild("backend").task(":clean")
+    dependsOn gradle.includedBuild("expensecalendar-backend").task(":clean")
 }
 
 // Javaソースとリソースのコンパイル
 tasks.register("compile") {
     group = "build" 
     description = "Compiles backend application"
-    dependsOn gradle.includedBuild("backend").task(":classes")
+    dependsOn gradle.includedBuild("expensecalendar-backend").task(":classes")
 }
 
 // 単体テストの実行
 tasks.register("test") {
     group = "verification"
     description = "Runs backend tests"
-    dependsOn gradle.includedBuild("backend").task(":test")
+    dependsOn gradle.includedBuild("expensecalendar-backend").task(":test")
 }
 
 // コード品質チェック（静的解析等）
 tasks.register("check") {
     group = "verification"
     description = "Runs all verification tasks"
-    dependsOn gradle.includedBuild("backend").task(":check")
+    dependsOn gradle.includedBuild("expensecalendar-backend").task(":check")
 }
 
 // テストなしでの実行可能JARファイル作成（ローカル）
 tasks.register("build") {
     group = "build"
     description = "Builds backend application without tests"
-    dependsOn gradle.includedBuild("backend").task(":bootJar")
+    dependsOn gradle.includedBuild("expensecalendar-backend").task(":bootJar")
 }
 
 // Heroku等のデプロイプラットフォーム用
