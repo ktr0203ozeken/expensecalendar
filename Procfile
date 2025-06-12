@@ -1,1 +1,1 @@
-web: cd backend && java -Dserver.port=$PORT -jar build/libs/expensecalendar-0.0.1-SNAPSHOT.jar
+web: cd expensecalendar-backend && java -Dserver.port=$PORT -jar build/libs/expensecalendar-backend-0.0.1-SNAPSHOT.jar
