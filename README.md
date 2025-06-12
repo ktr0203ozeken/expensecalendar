@@ -81,7 +81,7 @@
 4. Docker コンテナをビルド＆起動します。
 
     ```bash
-    docker compose --env-file .env up
+    docker compose up
     ```
 
 5. ブラウザで以下にアクセスしてアプリを確認します。
