@@ -1,2 +1,2 @@
 rootProject.name = 'expensecalendar'
-includeBuild 'expensecalendar-backend'
+include('expensecalendar-backend')
