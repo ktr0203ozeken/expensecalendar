@@ -1,1 +1,6 @@
-// Root build.gradle（Multi-Project Build 用。明示的なタスク定義はここでは行っていない）
+// Heroku等のデプロイプラットフォーム用
+tasks.register("stage") {
+    group = "build"
+    description = "Prepares application for deployment"
+    dependsOn("expensecalendar-backend:bootJar")
+}
