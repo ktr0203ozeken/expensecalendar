@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ozeken.expensecalendar.entity.AppUser;
 import com.ozeken.expensecalendar.entity.LoginUser;
-import com.ozeken.expensecalendar.repository.UserMapper;
+import com.ozeken.expensecalendar.mapper.UserMapper;
 
 @Service
 public class LoginUserDetailsServiceImpl implements UserDetailsService {
