@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.ozeken.expensecalendar.entity.AppUser;
 import com.ozeken.expensecalendar.form.RegisterForm;
 import com.ozeken.expensecalendar.helper.LoginHelper;
-import com.ozeken.expensecalendar.repository.UserMapper;
+import com.ozeken.expensecalendar.mapper.UserMapper;
 
 import lombok.RequiredArgsConstructor;
 

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ozeken.expensecalendar.dto.DailyTotal;
 import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.Expense;
-import com.ozeken.expensecalendar.repository.ExpenseMapper;
+import com.ozeken.expensecalendar.mapper.ExpenseMapper;
 import com.ozeken.expensecalendar.service.ExpenseService;
 
 import lombok.RequiredArgsConstructor;

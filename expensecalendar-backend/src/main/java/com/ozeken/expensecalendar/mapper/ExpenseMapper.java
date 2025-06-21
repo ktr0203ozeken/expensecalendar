@@ -1,4 +1,4 @@
-package com.ozeken.expensecalendar.repository;
+package com.ozeken.expensecalendar.mapper;
 
 import java.util.List;
 
