@@ -29,6 +29,20 @@ public interface ExpenseMapper {
     List<ExpenseWithGenre> selectWithGenreByUserId(@Param("userId") Long userId);
     
     /**
+     * 全期間の支出一覧をページネーションで取得（ジャンル名付き）
+     * 
+     * @param userId ユーザーID
+     * @param limit  取得する最大件数（1ページあたりの件数）
+     * @param offset 取得開始位置（例：0なら先頭から、10なら11件目から）
+     * @return 支出リスト（ジャンル名付き、ページネーション対応）
+     */
+    List<ExpenseWithGenre> selectWithGenreByUserIdPaged(
+    		@Param("userId") Long userId,
+    		@Param("limit") int limit,
+    		@Param("offset") int offset
+    		);
+    
+    /**
      * 指定年月日での支出一覧を取得（ジャンル名付き）
      *
      * @param userId ユーザーID
