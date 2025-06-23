@@ -19,14 +19,6 @@ public interface ExpenseMapper {
 	
 	
 	// ------- 取得処理 (リスト) ------------------------------------------------------
-	
-    /**
-     * 全期間の支出一覧を取得（ジャンル名付き）
-     *
-     * @param userId ユーザーID
-     * @return 支出リスト（ジャンル名付き）
-     */
-    List<ExpenseWithGenre> selectWithGenreByUserId(@Param("userId") Long userId);
     
     /**
      * 全期間の支出一覧をページネーションで取得（ジャンル名付き）

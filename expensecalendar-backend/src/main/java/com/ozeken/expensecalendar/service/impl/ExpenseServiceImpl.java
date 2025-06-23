@@ -33,11 +33,6 @@ public class ExpenseServiceImpl implements ExpenseService {
     
 
     // ------- 取得処理 (リスト) -----------------------------------------
-
-    @Override
-    public List<ExpenseWithGenre> findAllWithGenre(Long userId) {
-        return expenseMapper.selectWithGenreByUserId(userId);
-    }
     
 	@Override
 	public List<ExpenseWithGenre> findPagedExpenses(Long userId, int limit, int offset) {
