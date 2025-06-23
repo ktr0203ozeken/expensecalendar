@@ -22,9 +22,15 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class ExpenseServiceImpl implements ExpenseService {
+	
+	// --------- 定数 --------------------
+    // 支出一覧表示数のデフォルト
+    private static final int DEFAULT_PAGE_SIZE = 20;
 
-    // DI対象（データアクセス層）
+    
+    // ------------ DI対象 ---------------
     private final ExpenseMapper expenseMapper;
+    
 
     // ------- 取得処理 (リスト) -----------------------------------------
 
@@ -32,6 +38,29 @@ public class ExpenseServiceImpl implements ExpenseService {
     public List<ExpenseWithGenre> findAllWithGenre(Long userId) {
         return expenseMapper.selectWithGenreByUserId(userId);
     }
+    
+	@Override
+	public List<ExpenseWithGenre> findPagedExpenses(Long userId, int limit, int offset) {
+		
+		return expenseMapper.selectWithGenreByUserIdPaged(userId, limit, offset);
+	}
+	
+	/**
+	 * ページ番号とページサイズから支出一覧を取得（ページ番号は1から開始）
+	 */
+	@Override
+	public List<ExpenseWithGenre> findPagedExpensesByPage(Long userId, int page, int size) {
+		
+		if (page < 1 ) {
+			page = 1;
+		}
+		if (size < 1 ) {
+			size = DEFAULT_PAGE_SIZE;
+		}
+		// 例: page=1 -> offset=0（先頭から取得）
+		int offset = (page-1) * size;
+		return  findPagedExpenses(userId, size, offset);
+	}
     
     @Override
 	public List<ExpenseWithGenre> findWithGenreByDay(Long userId, int year, int month, int day) {

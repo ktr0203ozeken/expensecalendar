@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.Expense;
@@ -31,13 +32,19 @@ public class ExpenseController {
 	/** DI */
 	private final ExpenseService expenseService;
 
-	/** 家計簿一覧表示 */
+	/**
+	 *  家計簿一覧表示（ページネーション対応）
+	 */
 	@GetMapping
-	public String listExpenses(Model model, @AuthenticationPrincipal LoginUser loginUser) { 
-		
+	public String listExpenses(@RequestParam(name = "page", defaultValue = "1") int page,
+			                                 @RequestParam(name = "size", defaultValue = "20") int size,
+			                                 Model model, 
+			                                 @AuthenticationPrincipal LoginUser loginUser) { 
 		Long userId = loginUser.getAppUser().getId();
-		List<ExpenseWithGenre> expenses = expenseService.findAllWithGenre(userId);
+		List<ExpenseWithGenre> expenses = expenseService.findPagedExpensesByPage(userId, page, size);
 		model.addAttribute("expenses", expenses);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("pageSize", size);
 		return "expenses/list";
 	}
 

@@ -12,7 +12,7 @@
     
     <div class="container">
     
-    <h1>家計簿一覧</h1>
+    <h1>家計簿一覧（ページ: <span th:text="${currentPage}"></span>)</h1>
     <br>
     <a th:href="@{/expenses/calendar}" class="button primary">← カレンダーに戻る</a> |
     <a th:href="@{/expenses/new}"  class="button register">新しい支出を登録する</a>
@@ -54,6 +54,18 @@
         </tbody>
     </table>
     
+
+    <!--ページネーションリンク-->
+        <div>
+        <a th:href="@{/expenses?(page = ${currentPage - 1}, size = ${pageSize})}"
+              th:if="${currentPage > 1}">← 前へ</a>
+        
+        <span>ページ <span th:text="${currentPage}">1</span></span>
+
+        <a th:href="@{/expenses?(page = ${currentPage + 1}, size = ${pageSize})}"
+              th:if="${expenses.size() == pageSize}">次へ →</a>
+        </div>
+
     </div>
     
 </body>
