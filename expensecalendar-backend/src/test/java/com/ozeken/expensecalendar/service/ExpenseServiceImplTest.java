@@ -8,31 +8,32 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.Expense;
 import com.ozeken.expensecalendar.service.impl.ExpenseServiceImpl;
 
 @SpringBootTest
+@Transactional
+@ActiveProfiles("test")
 class ExpenseServiceImplTest {
+	
+	// ------- 定数 -------
+	private final Long TEST_USER_ID = 1L;
 
 	@Autowired
 	private ExpenseServiceImpl expenseService;
 
-	// テスト用のユーザーID
-	private final Long TEST_USER_ID = 1L;
-
 	@Test
 	void shouldGetAllExpenses() {
-		// 全件取得
-		List<ExpenseWithGenre> expenses = expenseService.findAllWithGenre(TEST_USER_ID);
-		// nullでないことを確認
+		List<ExpenseWithGenre> expenses = expenseService.findPagedExpensesByPage(TEST_USER_ID, 1, 100);
 		assertThat(expenses).isNotNull();
 	}
 
 	@Test
 	void shouldInsertExpense() {
-		// 登録
 		Expense expense = new Expense();
 		expense.setUserId(TEST_USER_ID);
 		expense.setDate(LocalDate.now());
@@ -42,15 +43,14 @@ class ExpenseServiceImplTest {
 
 		expenseService.insert(expense);
 
-		List<ExpenseWithGenre> expenses = expenseService.findAllWithGenre(TEST_USER_ID);
+		List<ExpenseWithGenre> expenses = expenseService.findPagedExpensesByPage(TEST_USER_ID, 1, 100);
 		assertThat(expenses)
-				.extracting(e -> e.getDescription())
-				.contains("テスト登録");
+			.extracting(ExpenseWithGenre::getDescription)
+			.contains("テスト登録");
 	}
 
 	@Test
 	void shouldUpdateExpense() {
-		// 更新対象を作成
 		Expense expense = new Expense();
 		expense.setUserId(TEST_USER_ID);
 		expense.setDate(LocalDate.now());
@@ -59,25 +59,23 @@ class ExpenseServiceImplTest {
 		expense.setDescription("更新前説明");
 
 		expenseService.insert(expense);
-		
-		List<ExpenseWithGenre> expenses = expenseService.findAllWithGenre(TEST_USER_ID);
-		ExpenseWithGenre target = expenses.get(expenses.size() - 1);
+
+		ExpenseWithGenre target = expenseService.findPagedExpensesByPage(TEST_USER_ID, 1, 100).stream()
+			.filter(e -> "更新前説明".equals(e.getDescription()))
+			.findFirst()
+			.orElseThrow(() -> new AssertionError("更新前説明が見つかりません"));
+
 		expense.setId(target.getId());
 		expense.setDescription("更新後説明");
-
-		// 更新
 		expenseService.update(expense);
 
 		Expense updated = expenseService.findById(target.getId(), TEST_USER_ID);
-		// カテゴリが更新されていることを確認
-		assertThat(expense.getDescription()).isEqualTo(updated.getDescription());
+		assertThat(updated.getDescription()).isEqualTo("更新後説明");
 	}
 
 	@Test
 	void shouldDeleteExpense() {
-		// 削除対象を作成
 		Expense expense = new Expense();
-		expense.setId(1L);
 		expense.setUserId(TEST_USER_ID);
 		expense.setDate(LocalDate.now());
 		expense.setGenreId(1);
@@ -86,14 +84,14 @@ class ExpenseServiceImplTest {
 
 		expenseService.insert(expense);
 
-		List<ExpenseWithGenre> expenses = expenseService.findAllWithGenre(TEST_USER_ID);
-		ExpenseWithGenre target = expenses.get(expenses.size() - 1);
+		ExpenseWithGenre target = expenseService.findPagedExpensesByPage(TEST_USER_ID, 1, 100).stream()
+			.filter(e -> "削除対象".equals(e.getDescription()))
+			.findFirst()
+			.orElseThrow(() -> new AssertionError("削除対象が見つかりません"));
 
-		// 削除
 		expenseService.deleteByIdAndUserId(target.getId(), TEST_USER_ID);
 
 		Expense deleted = expenseService.findById(target.getId(), TEST_USER_ID);
-		// 削除されていることを確認
 		assertThat(deleted).isNull();
 	}
 }

@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.ozeken.expensecalendar.entity.AppUser;
@@ -21,6 +22,7 @@ import com.ozeken.expensecalendar.entity.LoginUser;
 import com.ozeken.expensecalendar.service.ExpenseService;
 
 @WebMvcTest(CalendarViewController.class)
+@ActiveProfiles("test")
 class CalendarViewControllerTest {
 
     @Autowired
