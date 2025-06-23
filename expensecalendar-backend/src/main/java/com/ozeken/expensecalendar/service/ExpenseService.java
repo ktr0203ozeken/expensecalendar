@@ -15,14 +15,6 @@ public interface ExpenseService {
 
 	
 	// ------- 取得処理 (リスト) ------------------------------------------
-	
-    /**
-     * 指定ユーザーIDの全期間の支出リストを取得します（ジャンル名付き）
-     *
-     * @param userId ユーザーID
-     * @return 支出リスト（ジャンル名付き）
-     */
-    List<ExpenseWithGenre> findAllWithGenre(Long userId);
     
     /**
      * 全期間の支出一覧をページネーションで取得（ジャンル名付き）

@@ -19,22 +19,6 @@
 </resultMap>
 
 
-  <!-- ジャンル名付きで支出一覧を取得 -->
-<select id="selectWithGenreByUserId" resultMap="ExpenseWithGenreMap">
-  SELECT
-    e.id,
-    e.user_id,
-    e.date,
-    e.genre_id,
-    g.name AS genre_name,
-    e.amount,
-    e.description
-  FROM expenses e
-  JOIN genres g ON e.genre_id = g.id
-  WHERE e.user_id = #{userId}
-  ORDER BY e.date DESC
-</select>
-
 <!-- 
   指定されたユーザーIDに紐づく支出一覧を、ジャンル名付きでページネーション取得するSQL。
   支出は日付の降順（新しい順）に並び、LIMIT/OFFSETで表示件数を制御する。
