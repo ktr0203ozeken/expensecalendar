@@ -8,14 +8,12 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.Expense;
 import com.ozeken.expensecalendar.service.impl.ExpenseServiceImpl;
 
 @SpringBootTest
-@ActiveProfiles("test")
 class ExpenseServiceImplTest {
 
 	@Autowired

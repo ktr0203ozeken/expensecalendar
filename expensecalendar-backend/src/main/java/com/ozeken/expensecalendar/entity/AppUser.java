@@ -1,22 +1,19 @@
 package com.ozeken.expensecalendar.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
 import lombok.Data;
 
 @Data
-@Entity
 public class AppUser {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	// ID
     private Long id;
 
-    
+    // ユーザー名
     private String username;
+    
+    // パスワード
     private String password;
+    
+    // 権限
     private String role; // "USER" や "ADMIN"
 }
