@@ -21,6 +21,7 @@
 
 <!-- 
   指定されたユーザーIDに紐づく支出一覧を、ジャンル名付きでページネーション取得するSQL。
+  genresテーブルをJOINし、各支出に対応するジャンル名を取得する。
   支出は日付の降順（新しい順）に並び、LIMIT/OFFSETで表示件数を制御する。
   主に一覧画面（支出履歴ページ）での表示に使用される。
 -->
@@ -40,14 +41,21 @@
   LIMIT #{limit} OFFSET #{offset}
 </select>
 
-<!-- IDで一件取得  -->
+<!-- 
+   指定された支出IDとユーザーIDに一致する1件の支出データを取得するSQL。
+  主に支出の更新時（編集画面表示時）に、既存データを取得する目的で使用される。
+ -->
   <select id="selectByIdAndUserId" resultType="com.ozeken.expensecalendar.entity.Expense">
     SELECT id, user_id, date, genre_id, amount, description
     FROM expenses
     WHERE id = #{id} AND user_id = #{userId}
   </select>
   
-  <!-- ジャンル名付きで支出を取得 -->
+  <!-- 
+  ジャンル名付きで支出を一件のみ取得するSQL。
+  genresテーブルをJOINし、各支出に対応するジャンル名を取得する。
+  主に詳細表示画面での表示に使用される。
+   -->
    <select id="selectWithGenreByIdAndUserId" resultMap="ExpenseWithGenreMap">
         SELECT
             e.id,
