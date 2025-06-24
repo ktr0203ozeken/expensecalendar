@@ -37,17 +37,36 @@ public interface ExpenseService {
      */
     List<ExpenseWithGenre> findPagedExpensesByPage(Long userId, int page, int size);
     
+    
     /**
-	 * 指定ユーザーIDと年月日での支出リストを取得します（ジャンル名付き）
+	 * 指定ユーザーIDと年月日での支出一覧をページネーションで取得します（ジャンル名付き）
 	 *
 	 * @param userId ユーザーID
 	 * @param year 年
 	 * @param month 月
 	 * @param day 日
+	 * @param limit 取得する最大件数（1ページあたりの件数）
+	 * @param offset 取得開始位置（例：0なら先頭から、10なら11件目から）
 	 * @return 支出リスト（ジャンル名付き）
 	 */
-    List<ExpenseWithGenre> findWithGenreByDay(Long userId, int year, int month, int day);
+    List<ExpenseWithGenre> findPagedExpensesByDay(Long userId, int year, int month, int day, int limit, int offset);
+    
+    /**
+     * ページ番号とページサイズから支出一覧を取得（ページ番号は1から開始）
+     * 
+     * @param userId ユーザーID
+     * @param year 年
+	 * @param month 月
+	 * @param day 日
+     * @param page  現在のページ番号（1から始まる）
+     * @param size 1ページあたりの表示件数
+     * @return 支出リスト（ジャンル名付き、ページネーション対応）
+     * 
+     */
+    List<ExpenseWithGenre> findPagedExpensesByDayAndPage(Long userId, int year, int month, int day, int page, int size);
 
+    
+    
     // ------- 取得処理 (一件) ------------------------------------------
 
     /**

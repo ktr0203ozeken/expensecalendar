@@ -41,13 +41,18 @@ public interface ExpenseMapper {
      * @param year 年
      * @param month 月
      * @param day 日
+     * @param limit 取得する最大件数（1ページあたりの件数）
+     * @param offset 取得開始位置（例：0なら先頭から、10なら11件目から）
      * @return 支出リスト（ジャンル名付き）
      */
-    List<ExpenseWithGenre> selectWithGenreByUserIdAndDay(
+    List<ExpenseWithGenre> selectWithGenreByUserIdAndDayPaged(
         @Param("userId") Long userId,
         @Param("year") int year,
         @Param("month") int month,
-        @Param("day") int day);
+        @Param("day") int day,
+        @Param("limit") int limit,
+        @Param("offset") int offset
+        );
 
     
     // ------- 取得処理 (一件) ------------------------------------------------------

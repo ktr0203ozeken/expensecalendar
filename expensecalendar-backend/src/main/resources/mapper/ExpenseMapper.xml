@@ -70,12 +70,14 @@
         WHERE e.id = #{id} AND e.user_id = #{userId}
         ORDER BY e.date DESC
     </select>
- 
-<!-- 
-  指定された年月日の日付における、全支出明細（ジャンル名付き）を取得するSQL。
-  主にカレンダーの詳細表示に使用される。
-  -->
-<select id="selectWithGenreByUserIdAndDay" resultMap="ExpenseWithGenreMap">
+    
+    <!-- 
+  指定された年月日、ユーザーIDに紐づく支出一覧を、ジャンル名付きでページネーション取得するSQL。
+  genresテーブルをJOINし、各支出に対応するジャンル名を取得する。
+  支出は日付の降順（新しい順）に並び、LIMIT/OFFSETで表示件数を制御する。
+  主に一覧画面（支出履歴ページ）での表示に使用される。
+-->
+<select id="selectWithGenreByUserIdAndDayPaged" resultMap="ExpenseWithGenreMap">
   SELECT 
     e.id,
     e.user_id,
@@ -90,8 +92,10 @@
     AND EXTRACT(YEAR FROM e.date) = #{year}
     AND EXTRACT(MONTH FROM e.date) = #{month}
     AND EXTRACT(DAY FROM e.date) = #{day}
-  ORDER BY e.date
+  ORDER BY e.date DESC
+  LIMIT #{limit} OFFSET #{offset}
 </select>
+    
 
 <!-- 
   指定されたユーザーIDに紐づく、全支出の合計金額を取得するSQL。
