@@ -42,9 +42,21 @@ public class ExpenseController {
 			                                 @AuthenticationPrincipal LoginUser loginUser) { 
 		Long userId = loginUser.getAppUser().getId();
 		List<ExpenseWithGenre> expenses = expenseService.findPagedExpensesByPage(userId, page, size);
+		
+		// 1ページより大きいなら、減算する。
+		int prevPage = page > 1 ? page - 1 : 1;
+		
+		// デフォルト値と同じなら、加算する。
+		boolean hasNext = expenses.size() == size;
+		int nextPage = hasNext ? page +1 : page;
+		
 		model.addAttribute("expenses", expenses);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("pageSize", size);
+		model.addAttribute("prevPage", prevPage);
+		model.addAttribute("nextPage", nextPage);
+		model.addAttribute("hasNext", hasNext);
+		
 		return "expenses/list";
 	}
 
