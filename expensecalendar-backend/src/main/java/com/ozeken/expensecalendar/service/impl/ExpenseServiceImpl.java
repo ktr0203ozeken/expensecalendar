@@ -36,7 +36,6 @@ public class ExpenseServiceImpl implements ExpenseService {
     
 	@Override
 	public List<ExpenseWithGenre> findPagedExpenses(Long userId, int limit, int offset) {
-		
 		return expenseMapper.selectWithGenreByUserIdPaged(userId, limit, offset);
 	}
 	
@@ -57,9 +56,28 @@ public class ExpenseServiceImpl implements ExpenseService {
 		return  findPagedExpenses(userId, size, offset);
 	}
     
+	// --------- 年月日別取得処理（リスト）------------------------------------
+	
     @Override
-	public List<ExpenseWithGenre> findWithGenreByDay(Long userId, int year, int month, int day) {
-		return expenseMapper.selectWithGenreByUserIdAndDay(userId, year, month, day);
+	public List<ExpenseWithGenre> findPagedExpensesByDay(Long userId, int year, int month, int day, int limit , int offset) {
+		return expenseMapper.selectWithGenreByUserIdAndDayPaged(userId, year, month, day, limit ,offset);
+	}
+    
+    /**
+	 * ページ番号とページサイズから支出一覧を取得（ページ番号は1から開始）
+	 */
+	@Override
+	public List<ExpenseWithGenre> findPagedExpensesByDayAndPage(Long userId, int year, int month, int day, int page, int size) {
+		
+		if (page < 1 ) {
+			page = 1;
+		}
+		if (size < 1 ) {
+			size = DEFAULT_PAGE_SIZE;
+		}
+		// 例: page=1 -> offset=0（先頭から取得）
+		int offset = (page-1) * size;
+		return  findPagedExpensesByDay(userId, year, month, day, size, offset);
 	}
     
     // ------- 取得処理 (一件) -----------------------------------------
