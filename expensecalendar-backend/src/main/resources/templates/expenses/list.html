@@ -55,16 +55,16 @@
     </table>
     
 
-    <!--ページネーションリンク-->
-        <div>
-        <a th:href="@{/expenses?(page = ${currentPage - 1}, size = ${pageSize})}"
-              th:if="${currentPage > 1}">← 前へ</a>
-        
-        <span>ページ <span th:text="${currentPage}">1</span></span>
+    <!-- ページネーションリンク -->
+    <div>
+      <a th:href="@{/expenses?(page=${prevPage}, size=${pageSize})}"
+         th:if="${currentPage > 1}">← 前へ</a>
 
-        <a th:href="@{/expenses?(page = ${currentPage + 1}, size = ${pageSize})}"
-              th:if="${expenses.size() == pageSize}">次へ →</a>
-        </div>
+      <span>ページ <span th:text="${currentPage}">1</span></span>
+
+      <a th:href="@{/expenses?(page=${nextPage}, size=${pageSize})}"
+         th:if="${hasNext}">次へ →</a>
+    </div>
 
     </div>
     
