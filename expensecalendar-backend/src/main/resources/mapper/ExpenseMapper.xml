@@ -19,6 +19,8 @@
 </resultMap>
 
 
+<!------------------------ 取得処理 ----------------------------------->
+
 <!-- 
   指定されたユーザーIDに紐づく支出一覧を、ジャンル名付きでページネーション取得するSQL。
   genresテーブルをJOINし、各支出に対応するジャンル名を取得する。
@@ -41,36 +43,6 @@
   LIMIT #{limit} OFFSET #{offset}
 </select>
 
-<!-- 
-   指定された支出IDとユーザーIDに一致する1件の支出データを取得するSQL。
-  主に支出の更新時（編集画面表示時）に、既存データを取得する目的で使用される。
- -->
-  <select id="selectByIdAndUserId" resultType="com.ozeken.expensecalendar.entity.Expense">
-    SELECT id, user_id, date, genre_id, amount, description
-    FROM expenses
-    WHERE id = #{id} AND user_id = #{userId}
-  </select>
-  
-  <!-- 
-  ジャンル名付きで支出を一件のみ取得するSQL。
-  genresテーブルをJOINし、各支出に対応するジャンル名を取得する。
-  主に詳細表示画面での表示に使用される。
-   -->
-   <select id="selectWithGenreByIdAndUserId" resultMap="ExpenseWithGenreMap">
-        SELECT
-            e.id,
-            e.user_id,
-            e.date,
-            e.genre_id,
-            g.name AS genre_name,
-            e.amount,
-            e.description
-        FROM expenses e
-        JOIN genres g ON e.genre_id = g.id
-        WHERE e.id = #{id} AND e.user_id = #{userId}
-        ORDER BY e.date DESC
-    </select>
-    
     <!-- 
   指定された年月日、ユーザーIDに紐づく支出一覧を、ジャンル名付きでページネーション取得するSQL。
   genresテーブルをJOINし、各支出に対応するジャンル名を取得する。
@@ -96,7 +68,36 @@
   LIMIT #{limit} OFFSET #{offset}
 </select>
     
-
+<!-- 
+   指定された支出IDとユーザーIDに一致する1件の支出データを取得するSQL。
+  主に支出の更新時（編集画面表示時）に、既存データを取得する目的で使用される。
+ -->
+  <select id="selectByIdAndUserId" resultType="com.ozeken.expensecalendar.entity.Expense">
+    SELECT id, user_id, date, genre_id, amount, description
+    FROM expenses
+    WHERE id = #{id} AND user_id = #{userId}
+  </select>
+  
+  <!-- 
+  ジャンル名付きで支出を1件のみ取得するSQL。
+  genresテーブルをJOINし、各支出に対応するジャンル名を取得する。
+  主に詳細表示画面での表示に使用される。
+   -->
+   <select id="selectWithGenreByIdAndUserId" resultMap="ExpenseWithGenreMap">
+        SELECT
+            e.id,
+            e.user_id,
+            e.date,
+            e.genre_id,
+            g.name AS genre_name,
+            e.amount,
+            e.description
+        FROM expenses e
+        JOIN genres g ON e.genre_id = g.id
+        WHERE e.id = #{id} AND e.user_id = #{userId}
+        ORDER BY e.date DESC
+    </select>
+ 
 <!-- 
   指定されたユーザーIDに紐づく、全支出の合計金額を取得するSQL。
   金額の合計が `long` の上限を超えないようにするため、
@@ -136,6 +137,9 @@
   GROUP BY day
   ORDER BY day
 </select>
+
+
+<!-------------- ----- 登録・更新・削除処理 ----------------------->
 
   <!-- 新規登録 -->
   <insert id="insert" useGeneratedKeys="true" keyProperty="id">
