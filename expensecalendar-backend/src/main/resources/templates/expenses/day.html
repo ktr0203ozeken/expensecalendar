@@ -11,7 +11,9 @@
     
     <div class="container">
 
-    <h1 th:text="${year} + '年' + ${month} + '月' + ${day} + '日の支出一覧'">yyyy年mm月dd日の支出一覧</h1>
+        <h1 th:text="|${year}年${month}月${day}日の支出一覧（ページ数：${currentPage}）|">
+            yyyy年mm月dd日の支出一覧
+        </h1>
     <br>
         <a th:href="@{/expenses/day/new(year=${year}, month=${month}, day=${day})}"  class="button register">新しい支出を登録する</a>
             <br>
@@ -56,6 +58,17 @@
             
         </tbody>
     </table>
+    
+    <!-- ページネーションリンク -->
+    <div>
+      <a th:href="@{/expenses/day?(year=${year}, month=${month}, day=${day},page=${prevPage}, size=${pageSize})}"
+         th:if="${currentPage > 1}">← 前へ</a>
+
+      <span>ページ <span th:text="${currentPage}">1</span></span>
+
+      <a th:href="@{/expenses/day?(year=${year}, month=${month}, day=${day}, page=${nextPage}, size=${pageSize})}"
+         th:if="${hasNext}">次へ →</a>
+    </div>
     
     <br>
     

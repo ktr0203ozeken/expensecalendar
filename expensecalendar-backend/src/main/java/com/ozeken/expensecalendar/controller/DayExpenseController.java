@@ -39,6 +39,8 @@ public class DayExpenseController{
      * @param year 年
      * @param month 月
      * @param day 日
+     * @param page ペース数
+     * @param size サイズ
      * @param loginUser ログインユーザー情報
      * @param model モデル
      * @return 詳細表示テンプレート
@@ -48,6 +50,8 @@ public class DayExpenseController{
     		@RequestParam int year,
     		@RequestParam int month,
     		@RequestParam int day,
+    		@RequestParam(name = "page", defaultValue = "1") int page,
+    		@RequestParam(name = "size", defaultValue = "20") int size,
     		@AuthenticationPrincipal LoginUser loginUser,
     		Model model) {
         if (loginUser.getAppUser() == null) {
@@ -55,12 +59,24 @@ public class DayExpenseController{
         }
 
         Long userId = loginUser.getAppUser().getId();
-        List<ExpenseWithGenre> expenses = expenseService.findWithGenreByDay(userId, year, month, day);
+        List<ExpenseWithGenre> expenses = expenseService.findPagedExpensesByDayAndPage(userId, year, month, day, page, size);
+        
+        // 1ページより大きいなら、減算する。
+        int prevPage = page > 1 ? page - 1 : 1;
+     		
+        // デフォルト値と同じなら、加算する。
+        boolean hasNext = expenses.size() == size;
+        int nextPage = hasNext ? page +1 : page;
 
         model.addAttribute("expenses", expenses);
         model.addAttribute("year", year);
         model.addAttribute("month", month);
         model.addAttribute("day", day);
+        model.addAttribute("currentPage", page);
+		model.addAttribute("pageSize", size);
+		model.addAttribute("prevPage", prevPage);
+		model.addAttribute("nextPage", nextPage);
+		model.addAttribute("hasNext", hasNext);
 
         return "expenses/day";
     }
