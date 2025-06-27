@@ -13,7 +13,7 @@
     <br>
     <div>
     <a th:href="@{/expenses}" class="button primary">一覧へ</a> |
-    <a th:href="@{/expenses/new}"  class="button register">新しい支出を登録する</a>
+    <a th:href="@{/expenses/calendar/new(year=${year}, month=${month})}"  class="button register">新しい支出を登録する</a>
     <div>
     <div class="calendar-controls">
         <a th:href="@{/expenses/calendar(year=${prevYear}, month=${prevMonth})}" class="button">← 前の月</a>
