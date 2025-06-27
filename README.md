@@ -2,6 +2,12 @@
 
 このアプリは、**カレンダー形式で支出を管理できる家計簿アプリ**です。日ごとの支出、月ごとの合計金額を一目で確認できるよう設計されています。
 
+## 開発の背景 / 目的
+
+日々の支出を視覚的に管理したいという思いから本アプリを開発しました。  
+「どの日にいくら使ったのか」をひと目で確認できるよう、カレンダー形式のUIを採用しています。  
+個人開発として、要件定義から実装・デプロイまで一貫して対応しました。
+
 ## コミット履歴について
 
 ※過去にコミット履歴を整理するために rebase を使った影響で、一部の履歴が少し分かりづらくなっています。
@@ -22,7 +28,49 @@
 - ✅ 月ごとの合計支出表示
 - ✅ 入力バリデーション（不正な入力防止）
 
-## 使用技術
+
+## 📁 ディレクトリ構成
+
+本アプリは、**Spring Boot + Thymeleaf** により画面生成までをバックエンドで完結させているため、`frontend` ディレクトリは設けていません。実務を想定し、`expensecalendar-backend` をサブプロジェクトとした `Multi-Project Build` 構成を採用しています。
+```bash
+expensecalendar/
+├── .env.example                     # 環境変数（テンプレート）
+├── build.gradle / settings.gradle   # ルートプロジェクトのGradle設定
+├── compose.yaml                     # Docker Compose設定
+├── Procfile / system.properties     # Heroku用設定
+├── gradlew / gradlew.bat / gradle/  # Gradle Wrapper
+├── docs/                            # ER図・画面キャプチャなど
+│   └── img/
+│
+├── expensecalendar-backend/        # Spring Bootバックエンドアプリケーション
+│   ├── Dockerfile                  # Spring Bootバックエンド用のDockerビルド設定
+│   ├── build.gradle                # backendモジュール専用のGradle設定
+│   └── src/
+│       ├── main/
+│       │   ├── java/com/ozeken/expensecalendar/
+│       │   │   ├── controller/        # 各種コントローラ
+│       │   │   ├── service/           # サービス層・実装
+│       │   │   ├── entity/            # エンティティクラス
+│       │   │   ├── mapper/            # Mapperインターフェース
+│       │   │   └── ...                # その他補助クラスなど
+│       │   └── resources/
+│       │       ├── application-dev.properties      # 開発環境用設定
+│       │       ├── application-prod.properties     # 本番環境用設定
+│       │       ├── schema.sql / data.sql           # 初期データ・スキーマ
+│       │       ├── mapper/                         # MyBatis SQLマッパーXML
+│       │       ├── templates/                      # Thymeleafテンプレート
+│       │       └── static/                         # CSS等
+│       │
+│       └── test/
+│           ├── java/com/ozeken/expensecalendar/      # テストコード（Controller, Service）
+│           └── resources/
+│               ├── application-test.properties       # テスト用環境設定
+│               └── schema-test.sql / data-test.sql   # テスト用スキーマ・データ
+│
+└── README.md
+```
+
+## 📦 使用技術
 
 | 種類       | 技術                           |
 |------------|--------------------------------|
