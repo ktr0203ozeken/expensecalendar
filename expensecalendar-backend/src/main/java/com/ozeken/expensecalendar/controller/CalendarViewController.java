@@ -68,6 +68,10 @@ public class CalendarViewController {
         //指定された年月の前月・次月を取得
         LocalDate prevMonth = firstDay.minusMonths(1);
         LocalDate nextMonth = firstDay.plusMonths(1);
+        
+        // 指定された年の3年前、3年後を計算（ジャンプ機能用）
+        int startYearForJumpForm = currentYear - 3;
+        int endYearForJumpForm = currentYear + 3;
 
      // 指定された年月の家計簿を取得
         if (loginUser.getAppUser() == null) {
@@ -98,6 +102,9 @@ public class CalendarViewController {
         model.addAttribute("prevMonth", prevMonth.getMonthValue());
         model.addAttribute("nextYear", nextMonth.getYear());
         model.addAttribute("nextMonth", nextMonth.getMonthValue());
+        // 過去3年分：将来3年分の年を渡す
+        model.addAttribute("startYear", startYearForJumpForm);
+        model.addAttribute("endYear", endYearForJumpForm);
 
         return "expenses/calendar";
     }

@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/ress.min.css}">
     <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/calendar.css}">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
 </head>
 
 <body>
@@ -19,6 +20,28 @@
         <a th:href="@{/expenses/calendar(year=${prevYear}, month=${prevMonth})}" class="button">← 前の月</a>
         <a th:href="@{/expenses/calendar(year=${nextYear}, month=${nextMonth})}" class="button">次の月 →</a>
     </div>
+    
+    <!--カレンダージャンプ機能（現在表示されているカレンダーの3年前後の範囲で移動）-->
+    <form th:action="@{/expenses/calendar}" method="get" class="jump-form">
+      <label>特定月にジャンプ：</label>
+      <select name="year" class="form-select">
+        <option th:each="y : ${#numbers.sequence(startYear, endYear)}"
+                th:value="${y}"
+                th:text="${y}"
+                th:selected="${y} == ${year}">
+        </option>
+      </select>
+      <span>年</span>
+      <select name="month" class="form-select">
+        <option th:each="m : ${#numbers.sequence(1, 12)}"
+                th:value="${m}"
+                th:text="${m}"
+                th:selected="${m} == ${month}">
+        </option>
+      </select>
+      <span>月</span>
+      <button type="submit">ジャンプ</button>
+    </form>
     
     <!-- 月の合計金額表示 -->
     <div class="monthly-total-amount" th:text="'月の合計：¥' + ${#numbers.formatInteger({monthlyTotal},0,'COMMA')}"></div>
