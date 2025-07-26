@@ -43,6 +43,26 @@
   LIMIT #{limit} OFFSET #{offset}
 </select>
 
+<!-- 
+    全期間における、"ジャンルで絞り込み"をして取得するSQL。
+    genresテーブルをJOINし、各支出に対応するジャンル名を取得する。
+    支出は日付の降順（新しい順）に並び、LIMIT/OFFSETで表示件数を制御する。
+-->
+<select id="selectExpensesByUserIdAndGenreId" resultMap="ExpenseWithGenreMap">
+  SELECT 
+      e.id,
+      e.date,
+      e.genre_id,
+      g.name AS genre_name,
+      e.amount,
+      e.description
+  FROM expenses e
+  JOIN genres g ON e.genre_id = g.id
+  WHERE e.genre_id = #{genreId} AND e.user_id = #{userId}
+  ORDER BY e.date DESC
+  LIMIT #{limit} OFFSET #{offset}
+</select>
+
     <!-- 
   指定された年月日、ユーザーIDに紐づく支出一覧を、ジャンル名付きでページネーション取得するSQL。
   genresテーブルをJOINし、各支出に対応するジャンル名を取得する。
@@ -67,7 +87,7 @@
   ORDER BY e.date DESC
   LIMIT #{limit} OFFSET #{offset}
 </select>
-    
+
 <!-- 
    指定された支出IDとユーザーIDに一致する1件の支出データを取得するSQL。
   主に支出の更新時（編集画面表示時）に、既存データを取得する目的で使用される。
@@ -97,7 +117,7 @@
         WHERE e.id = #{id} AND e.user_id = #{userId}
         ORDER BY e.date DESC
     </select>
- 
+
 <!-- 
   指定されたユーザーIDに紐づく、全支出の合計金額を取得するSQL。
   金額の合計が `long` の上限を超えないようにするため、
