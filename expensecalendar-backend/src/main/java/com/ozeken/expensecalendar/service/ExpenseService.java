@@ -37,6 +37,36 @@ public interface ExpenseService {
      */
     List<ExpenseWithGenre> findPagedExpensesByPage(Long userId, int page, int size);
     
+
+     /**
+     * 指定ユーザーIDとジャンルIDでの支出一覧をページネーションで取得します（ジャンル名付き）
+     * ジャンル名絞り込み機能用。
+     * 
+     * @param userId ユーザーID
+     * @param genreId ジャンルID
+     * @param limit  取得する最大件数（1ページあたりの件数）
+     * @param offset 取得開始位置（例：0なら先頭から、10なら11件目から）
+     * @return 支出リスト (ジャンル名付き、ページネーション対応)
+     */
+    List<ExpenseWithGenre> findExpensesByUserIdAndGenreId(
+        Long userId,
+        Integer genreId,
+        int limit,
+        int offset
+        );
+
+    /**
+     * ページ番号とページサイズから支出一覧を取得（ページ番号は1から開始）
+     * 
+     * @param userId ユーザーID
+     * @param ganreId ジャンルID
+     * @param page  現在のページ番号（1から始まる）
+     * @param size 1ページあたりの表示件数
+     * @return 支出リスト（ジャンル名付き、ページネーション対応）
+     * 
+     */
+    List<ExpenseWithGenre> findPagedExpensesByUserIdAndGenreId(Long userId, Integer genreId, int page, int size);
+
     
     /**
 	 * 指定ユーザーIDと年月日での支出一覧をページネーションで取得します（ジャンル名付き）

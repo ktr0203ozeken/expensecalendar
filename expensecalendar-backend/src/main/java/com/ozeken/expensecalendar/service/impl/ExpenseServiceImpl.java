@@ -55,7 +55,29 @@ public class ExpenseServiceImpl implements ExpenseService {
 		int offset = (page-1) * size;
 		return  findPagedExpenses(userId, size, offset);
 	}
-    
+	
+	@Override
+	public List<ExpenseWithGenre> findExpensesByUserIdAndGenreId(Long userId,Integer genreId,int limit,int offset) {
+		return expenseMapper.selectExpensesByUserIdAndGenreId(userId, genreId, limit, offset);
+	}
+	
+	/**
+	 * ページ番号とページサイズから支出一覧を取得（ページ番号は1から開始）
+	 */
+	@Override
+	public List<ExpenseWithGenre> findPagedExpensesByUserIdAndGenreId(Long userId, Integer genreId, int page, int size) {
+		
+		if (page < 1 ) {
+			page = 1;
+		}
+		if (size < 1 ) {
+			size = DEFAULT_PAGE_SIZE;
+		}
+		// 例: page=1 -> offset=0（先頭から取得）
+		int offset = (page-1) * size;
+		return  findExpensesByUserIdAndGenreId(userId, genreId, size, offset);
+	}
+
 	// --------- 年月日別取得処理（リスト）------------------------------------
 	
     @Override
