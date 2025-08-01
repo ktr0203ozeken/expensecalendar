@@ -3,6 +3,7 @@ package com.ozeken.expensecalendar.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ozeken.expensecalendar.entity.Genre;
 
@@ -10,9 +11,16 @@ import com.ozeken.expensecalendar.entity.Genre;
 public interface GenreMapper {
 
 	/**
-	 *  すべてのジャンルをリストで取得するSQL。
+	 *  すべてのジャンルをリストで取得するメソッド。
 	 *  
 	 * @return ジャンルリスト
 	 */
-	List<Genre> selectAllGenre ();
+	List<Genre> selectAllGenre();
+	
+	/**
+	 * IDで一件ジャンルを取得するメソッド。
+	 * 
+	 * @return
+	 */
+	Genre selectGenreById(@RequestParam("id") Integer id);
 }
