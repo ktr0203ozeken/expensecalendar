@@ -22,4 +22,9 @@ public class GenreServiceImpl implements GenreService {
 		return genreMapper.selectAllGenre();
 	}
 
+	@Override
+	public Genre selectGenreById(Integer id) {
+		return genreMapper.selectGenreById(id);
+	}
+
 }
