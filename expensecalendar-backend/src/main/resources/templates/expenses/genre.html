@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>家計簿一覧</title>
+    <title th:text="|家計簿一覧（${genreName}）|"></title>
     <link rel="stylesheet" th:href="@{/css/ress.min.css}">
     <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/list.css}">
@@ -12,25 +12,14 @@
     
     <div class="container">
     
-    <h1>家計簿一覧（ページ: <span th:text="${currentPage}"></span>)</h1>
+    <h1 th:text = "|家計簿一覧（ジャンル:${genreName}）（ページ: ${currentPage}）|"></h1>
     <br>
     <a th:href="@{/expenses/calendar}" class="button primary">← カレンダーに戻る</a> |
-    <a th:href="@{/expenses/new}"  class="button register">新しい支出を登録する</a>
+    <a th:href="@{/expenses/new}"  class="button register">新しい支出を登録する</a> |
+    <a th:href="@{/expenses}" class="button unfilter" >ジャンル絞り込み解除</a>
         <br>
-        
-        <!-- ジャンル別絞り込み機能 -->
-        <form th:action="@{/expenses/genre}" method="get">
-          <select name="genreId" onchange="this.form.submit()">
-            <option value="">--選択してください--</option>
-            <option th:each="genre : ${genres}"
-                    th:value="${genre.id}"
-                    th:text="${genre.name}"
-                    th:selected="${genre.id == selectedGenreId}">
-            </option>
-          </select>
-        </form>
-        
         <br>
+
     <table border="1">
         <thead>
             <tr>
@@ -69,12 +58,12 @@
 
     <!-- ページネーションリンク -->
     <div>
-      <a th:href="@{/expenses?page=${prevPage}, size=${pageSize})}"
+      <a th:href="@{/expenses/genre?(genreId=${genreId}, page=${prevPage}, size=${pageSize})}"
          th:if="${currentPage > 1}">← 前へ</a>
 
       <span>ページ <span th:text="${currentPage}">1</span></span>
 
-      <a th:href="@{/expenses?(page=${nextPage}, size=${pageSize})}"
+      <a th:href="@{/expenses/genre?(genreId=${genreId}, page=${nextPage}, size=${pageSize})}"
          th:if="${hasNext}">次へ →</a>
     </div>
 

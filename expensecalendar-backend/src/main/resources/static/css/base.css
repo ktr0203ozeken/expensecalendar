@@ -87,6 +87,14 @@ a.button:hover {
     background-color: #5cc1bc;
 }
 
+.button.unfilter {
+    background-color: lightgray;
+}
+
+.button.unfilter:hover {
+    background-color: darkgray;
+}
+
 
 a.login,
 button.login,

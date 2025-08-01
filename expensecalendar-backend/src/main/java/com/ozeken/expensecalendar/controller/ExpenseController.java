@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ozeken.expensecalendar.dto.ExpenseWithGenre;
 import com.ozeken.expensecalendar.entity.Expense;
+import com.ozeken.expensecalendar.entity.Genre;
 import com.ozeken.expensecalendar.entity.LoginUser;
 import com.ozeken.expensecalendar.form.ExpenseForm;
 import com.ozeken.expensecalendar.helper.ExpenseHelper;
 import com.ozeken.expensecalendar.service.ExpenseService;
+import com.ozeken.expensecalendar.service.GenreService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +33,7 @@ public class ExpenseController {
 
 	/** DI */
 	private final ExpenseService expenseService;
+	private final GenreService genreService;
 
 	/**
 	 *  家計簿一覧表示（ページネーション対応）
@@ -50,7 +53,11 @@ public class ExpenseController {
 		boolean hasNext = expenses.size() == size;
 		int nextPage = hasNext ? page +1 : page;
 		
+		// ジャンルリストを取得
+		List<Genre> genres = genreService.findAllGenre();
+		
 		model.addAttribute("expenses", expenses);
+		model.addAttribute("genres", genres);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("pageSize", size);
 		model.addAttribute("prevPage", prevPage);
@@ -68,6 +75,41 @@ public class ExpenseController {
 		model.addAttribute("returnUrl", "/expenses");
 		
 		return "expenses/form";
+	}
+	
+	/** 
+	 * ジャンル別支出一覧表示（ページネーション対応）
+	 */
+	@GetMapping("/genre")
+	public String listExpensesFilterGenre(@RequestParam(name = "page", defaultValue = "1") int page,
+	                                                          @RequestParam(name = "size", defaultValue = "20") int size,
+										                      @RequestParam("genreId") Integer genreId,
+										                      Model model,
+										                      @AuthenticationPrincipal LoginUser loginUser) {
+
+		Long userId = loginUser.getAppUser().getId();
+		List<ExpenseWithGenre> expenses = expenseService.findPagedExpensesByUserIdAndGenreId(userId, genreId, page,
+				size);
+
+		// 1ページより大きいなら、減算する。
+		int prevPage = page > 1 ? page - 1 : 1;
+		// デフォルト値と同じなら、加算する。
+		boolean hasNext = expenses.size() == size;
+		int nextPage = hasNext ? page + 1 : page;
+		
+		Genre genre = genreService.selectGenreById(genreId);
+		String genreName = genre.getName();
+
+		model.addAttribute("expenses", expenses);
+		model.addAttribute("genreName", genreName);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("pageSize", size);
+		model.addAttribute("prevPage", prevPage);
+		model.addAttribute("nextPage", nextPage);
+		model.addAttribute("hasNext", hasNext);
+		model.addAttribute("genreId", genreId);
+
+		return "expenses/genre";
 	}
 
 	/** 編集フォーム表示 */
